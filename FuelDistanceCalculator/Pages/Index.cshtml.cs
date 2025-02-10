@@ -90,7 +90,6 @@ public class IndexModel : PageModel
                     CalculationSucessful = true;
                     TempData["TotalCost1"] = TotalCost1.ToString(); // Speichern in TempData
                     TempData["TotalCost2"] = TotalCost2.ToString(); // Speichern in TempData
-                    TempData["Message"] = "Berechnung erfolgreich!";
                 }
                 break;
 
