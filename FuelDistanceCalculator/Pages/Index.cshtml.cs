@@ -61,7 +61,7 @@ public class IndexModel : PageModel
     {
                 Console.WriteLine("onPost Activated with action " + action);
         // Berechnung der Gesamtkosten für Tankstelle 1
-        if(action != null && action.Equals("calculate")){
+        if(action != null && action.Equals(ActionConstants.Calculate)){
             var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
             TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
             TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
@@ -70,8 +70,9 @@ public class IndexModel : PageModel
                     CalculationSucessful = true;
                 }
         }
-        if(action != null && action.Equals("save")){
+        if(action != null && action.Equals(ActionConstants.Save)){
             Console.WriteLine("save was called");
+            TempData["Message"] = "Daten wurden nicht erfolgreich gespeichert!";
         }
         
         ViewData["ContactName"] = ContactInfo.Name;
