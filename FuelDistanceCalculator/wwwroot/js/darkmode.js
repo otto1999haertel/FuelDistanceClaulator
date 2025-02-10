@@ -8,8 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("darkMode") === "enabled") {
         body.classList.add("dark-mode");
         toggleButton.textContent = "☀️ Mode";
+        localStorage.setItem("darkMode", "enabled");
         toggleButton.classList.remove("btn-outline-dark");
         toggleButton.classList.add("btn-outline-light");
+    }
+
+    if(table){
+        if (body.classList.contains("dark-mode")){
+            table.classList.add("table-dark");
+        }
+        else{
+            table.classList.remove("table-dark");
+        }
     }
 
     toggleButton.addEventListener("click", function () {

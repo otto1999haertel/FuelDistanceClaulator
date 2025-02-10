@@ -20,5 +20,19 @@
         </tr>
     </thead>
     <tbody>
+        @foreach (var item in Model.HistoryItems)
+        {
+            <tr>
+                <td>@item.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.GasStation1</td>
+                <td>@item.TotalCost1.ToString("F2")</td>
+                <td>@item.GasStation2</td>
+                <td>@item.TotalCost2.ToString("F2")</td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<!-- Dark Mode Script einfügen -->
+@* <script src="~/js/darkmode.js"></script> *@
