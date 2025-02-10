@@ -72,6 +72,8 @@ public class IndexModel : PageModel
         }
         if(action != null && action.Equals(ActionConstants.Save)){
             Console.WriteLine("save was called");
+            DateTime saveDate = DateTime.Now;
+            Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
             TempData["Message"] = "Daten wurden nicht erfolgreich gespeichert!";
         }
         
