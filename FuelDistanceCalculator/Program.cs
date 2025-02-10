@@ -9,7 +9,7 @@ builder.Services.AddRazorPages();
 
 // Registrieren des FuelPriceService in der DI-Container
 builder.Services.AddSingleton<FuelPriceService>(provider =>
-    new FuelPriceService(10, 2.5m));
+    new FuelPriceService(10, 2.5));
 
 var app = builder.Build();
 

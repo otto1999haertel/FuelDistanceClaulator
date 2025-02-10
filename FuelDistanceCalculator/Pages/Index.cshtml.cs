@@ -6,22 +6,22 @@ namespace FuelDistanceCalculator.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
-    private readonly FuelPriceService _fuelPriceService;
+    private FuelPriceService _fuelPriceService;
 
     [BindProperty]
-    public decimal FuelAmount { get; set; } // Globale Tankmenge für beide Tankstellen
+    public double FuelAmount { get; set; } // Globale Tankmenge für beide Tankstellen
     [BindProperty]
-    public decimal PricePerKm { get; set; } // Preis pro Kilometer für beide Tankstellen
+    public double PricePerKm { get; set; } // Preis pro Kilometer für beide Tankstellen
 
     [BindProperty]
-    public decimal Distance1 { get; set; }
+    public double Distance1 { get; set; }
     [BindProperty]
-    public decimal FuelPrice1 { get; set; }
+    public double FuelPrice1 { get; set; }
 
     [BindProperty]
-    public decimal Distance2 { get; set; }
+    public double Distance2 { get; set; }
     [BindProperty]
-    public decimal FuelPrice2 { get; set; }
+    public double FuelPrice2 { get; set; }
     
     [BindProperty]
     public string NameGasStation1 {get;set;}
@@ -33,10 +33,11 @@ public class IndexModel : PageModel
     public bool CalculationSucessful { get; set; }
 
     [BindProperty]
-    public decimal TotalCost1 { get; set; }
+    public double TotalCost1 { get; private set; }
 
     [BindProperty]
-    public decimal TotalCost2 { get; set; }
+    public double TotalCost2 { get; private set; }
+
 
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
     {
@@ -47,37 +48,60 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         ViewData["ContactName"] = ContactInfo.Name;
+        NameGasStation1 = "Tankstelle 1";
+        NameGasStation2 = "Tankstelle 2";
 
+
+        Console.WriteLine("get was executed and overwirte of values");
         FuelAmount = 0;
-        PricePerKm = 0.25m;
+        PricePerKm = 0.25;
         FuelPrice1 = 0;
         Distance1 = 0;
         FuelPrice2 = 0;
         Distance2 = 0;
+
+        if (TempData["TotalCost1"] != null && TempData["TotalCost2"] != null)
+        {
+            TotalCost1 = Convert.ToDouble(TempData["TotalCost1"]);
+            TotalCost2 = Convert.ToDouble(TempData["TotalCost2"]);
+            CalculationSucessful = true; // Falls es berechnete Werte gibt, setze auf erfolgreich
+        }
     }
 
 
      public void OnPost(string action)
     {
+        Console.WriteLine($"Total cost{TotalCost1}");
+        _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
        if (Enum.TryParse<ActionType>(action, true, out var actionType))
         {
         switch (actionType)
         {
             case ActionType.Calculate:
                 // Berechnung durchführen
-                var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
-                TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
-                TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
+                Console.WriteLine("calculate");
+
+                TotalCost1 = _fuelPriceService.CalculateEntireCost(FuelPrice1, Distance1);
+                TotalCost2 = _fuelPriceService.CalculateEntireCost(FuelPrice2, Distance2);
                 if (TotalCost1 > 0 && TotalCost2 > 0)
                 {
+                    Console.WriteLine($"{NameGasStation1} : {TotalCost1}");
+                     Console.WriteLine($"{NameGasStation2} : {TotalCost2}");
                     CalculationSucessful = true;
+                    TempData["TotalCost1"] = TotalCost1.ToString(); // Speichern in TempData
+                    TempData["TotalCost2"] = TotalCost2.ToString(); // Speichern in TempData
+                    TempData["Message"] = "Berechnung erfolgreich!";
                 }
                 break;
 
             case ActionType.Save:
+                Console.WriteLine("save");
                 // Speichern durchführen
                 DateTime saveDate = DateTime.Now;
+
                 Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
+                Console.WriteLine($"{NameGasStation1} : {TempData["TotalCost1"]}");
+                Console.WriteLine($"{NameGasStation2} : {TempData["TotalCost2"]}");
                 TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
                 break;
 

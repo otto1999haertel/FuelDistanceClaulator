@@ -1,8 +1,28 @@
-@page
-@model PrivacyModel
-@{
-    ViewData["Title"] = "History";
-}
-<h1>@ViewData["Title"]</h1>
+@page "/history"
+@model HistoryModel
 
-<p>Saved calculated Hostory</p>
+<h3>Gespeicherte Berechnungen</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tankstelle 1</th>
+            <th>Tankstelle 2</th>
+            <th>Gesamtkosten 1</th>
+            <th>Gesamtkosten 2</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model.FuelPriceRecords)
+        {
+            <tr>
+                <td>@record.StationName1</td>
+                <td>@record.StationName2</td>
+                <td>@record.TotalCost1</td>
+                <td>@record.TotalCost2</td>
+                <td>@record.SaveDate.ToString("dd MMM yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,14 +1,14 @@
 public class FuelPriceService
 {
     private int fuelAmount;
-    private decimal pricePerkilometer;
+    private double pricePerkilometer;
 
-    public FuelPriceService(int FuelAmount, decimal pricePerkilometer){
+    public FuelPriceService(int FuelAmount, double pricePerkilometer){
         this.pricePerkilometer=pricePerkilometer;
         this.fuelAmount = FuelAmount;
     }
 
-    public decimal CalculateEntireCost(decimal pricePerLiter, decimal distance){
+    public double CalculateEntireCost(double pricePerLiter, double distance){
         return (fuelAmount * pricePerLiter) + (distance *pricePerkilometer);
     }
 }
