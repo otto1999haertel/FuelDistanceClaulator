@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: .  # Verzeichnis für den Build
+      dockerfile: Dockerfile  # Dockerfile, das verwendet wird
+    ports:
+      - "8080:8080"  # Exponiere Port 8080
+    environment:
+      - ASPNETCORE_URLS=http://+:8080  # Umgebung setzen, damit die App auf Port 8080 lauscht
+    restart: always  # Sicherstellen, dass der Container bei einem Absturz immer neu startet
+    container_name: fuel-distance-calculator-container  # Containername für einfache Verwaltung
+    networks:
+      - app-network  # Definiertes Netzwerk (optional, falls du mehrere Services hast)
+
+networks:
+  app-network:
+    driver: bridge  # Standard Netzwerkmodus
