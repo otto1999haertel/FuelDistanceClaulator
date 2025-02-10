@@ -14,6 +14,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-
+        ViewData["ContactName"] = ContactInfo.Name;
     }
 }

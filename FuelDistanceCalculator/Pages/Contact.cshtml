@@ -1,0 +1,13 @@
+@page
+@model ContactModel
+@{
+    ViewData["Title"] = "Contact";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>If you have any questions, feel free to reach out to us!</p>
+
+<div>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <a href="mailto:@(Model.Email)">@Model.Email</a>
+</div>

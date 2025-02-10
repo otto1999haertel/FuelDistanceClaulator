@@ -14,6 +14,7 @@ public class PrivacyModel : PageModel
 
     public void OnGet()
     {
+        ViewData["ContactName"] = ContactInfo.Name;
     }
 }
 
