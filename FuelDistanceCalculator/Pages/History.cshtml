@@ -14,15 +14,5 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var record in Model.FuelPriceRecords)
-        {
-            <tr>
-                <td>@record.StationName1</td>
-                <td>@record.StationName2</td>
-                <td>@record.TotalCost1</td>
-                <td>@record.TotalCost2</td>
-                <td>@record.SaveDate.ToString("dd MMM yyyy HH:mm")</td>
-            </tr>
-        }
     </tbody>
 </table>

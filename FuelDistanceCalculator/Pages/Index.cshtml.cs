@@ -38,6 +38,10 @@ public class IndexModel : PageModel
     [BindProperty]
     public double TotalCost2 { get; private set; }
 
+    [BindProperty]
+    public FuelType SelectedFuelType { get; set; }
+
+
 
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
     {
@@ -50,6 +54,7 @@ public class IndexModel : PageModel
         ViewData["ContactName"] = ContactInfo.Name;
         NameGasStation1 = "Tankstelle 1";
         NameGasStation2 = "Tankstelle 2";
+        SelectedFuelType = FuelType.Diesel;
 
 
         Console.WriteLine("get was executed and overwirte of values");
@@ -101,6 +106,7 @@ public class IndexModel : PageModel
                 Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
                 Console.WriteLine($"{NameGasStation1} : {TempData["TotalCost1"]}");
                 Console.WriteLine($"{NameGasStation2} : {TempData["TotalCost2"]}");
+                Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
                 TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
                 break;
 

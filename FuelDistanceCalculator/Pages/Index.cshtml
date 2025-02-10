@@ -15,6 +15,17 @@
             <!-- Eingabefelder für globale Werte - mittig zentriert -->
             <div class="col-md-6">
                 <h3>Globale Eingabewerte</h3>
+
+                <!-- Dropdown für Spritart -->
+               <div class="form-group">
+                    <label for="FuelType">Spritart</label>
+                    <select class="form-control" id="FuelType" name="SelectedFuelType" asp-for="SelectedFuelType" asp-items="@(new SelectList(Enum.GetValues(typeof(FuelType))))">
+                    </select>
+                </div>
+
+
+
+
                 <div class="form-group">
                     <label for="fuelAmount">Zu tankende Menge (Liter)</label>
                     <input type="text" id="FuelAmountDisplay" class="form-control" required onblur="calculateAndStore(this)" value="@Model.FuelAmount" />
