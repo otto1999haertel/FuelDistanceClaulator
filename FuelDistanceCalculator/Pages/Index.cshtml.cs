@@ -59,24 +59,39 @@ public class IndexModel : PageModel
 
      public void OnPost(string action)
     {
-                Console.WriteLine("onPost Activated with action " + action);
-        // Berechnung der Gesamtkosten für Tankstelle 1
-        if(action != null && action.Equals(ActionConstants.Calculate)){
-            var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
-            TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
-            TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
-
-            if(TotalCost1 > 0 && TotalCost2>0){
+       if (Enum.TryParse<ActionType>(action, true, out var actionType))
+        {
+        switch (actionType)
+        {
+            case ActionType.Calculate:
+                // Berechnung durchführen
+                var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
+                TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
+                TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
+                if (TotalCost1 > 0 && TotalCost2 > 0)
+                {
                     CalculationSucessful = true;
                 }
+                break;
+
+            case ActionType.Save:
+                // Speichern durchführen
+                DateTime saveDate = DateTime.Now;
+                Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
+                TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
+                break;
+
+            default:
+                // Unbekannte Aktion
+                TempData["Message"] = "Unbekannte Aktion.";
+                break;
         }
-        if(action != null && action.Equals(ActionConstants.Save)){
-            Console.WriteLine("save was called");
-            DateTime saveDate = DateTime.Now;
-            Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
-            TempData["Message"] = "Daten wurden nicht erfolgreich gespeichert!";
         }
-        
+        else
+         {
+        TempData["Message"] = "Ungültiger Aktionswert.";
+         }
+
         ViewData["ContactName"] = ContactInfo.Name;
 
     }
