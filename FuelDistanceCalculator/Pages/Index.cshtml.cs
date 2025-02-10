@@ -22,14 +22,20 @@ public class IndexModel : PageModel
     public decimal Distance2 { get; set; }
     [BindProperty]
     public decimal FuelPrice2 { get; set; }
-
+    
+    [BindProperty]
     public string NameGasStation1 {get;set;}
+
+    [BindProperty]
     public string NameGasStation2 {get;set;}
-
-    public bool Calculated { get; set; }
-
+       
+    [BindProperty]
     public bool CalculationSucessful { get; set; }
+
+    [BindProperty]
     public decimal TotalCost1 { get; set; }
+
+    [BindProperty]
     public decimal TotalCost2 { get; set; }
 
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
@@ -50,17 +56,36 @@ public class IndexModel : PageModel
         Distance2 = 0;
     }
 
-     public void OnPost()
-    {
-        // Berechnung der Gesamtkosten für Tankstelle 1
-        var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
-        TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
-        TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
 
-        if(TotalCost1 > 0 && TotalCost2>0){
-            CalculationSucessful = true;
+     public void OnPost(string action)
+    {
+                Console.WriteLine("onPost Activated with action " + action);
+        // Berechnung der Gesamtkosten für Tankstelle 1
+        if(action != null && action.Equals("calculate")){
+            var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
+            TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
+            TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
+
+            if(TotalCost1 > 0 && TotalCost2>0){
+                    CalculationSucessful = true;
+                }
         }
+        if(action != null && action.Equals("save")){
+            Console.WriteLine("save was called");
+        }
+        
         ViewData["ContactName"] = ContactInfo.Name;
-        Calculated = true;
+
     }
+
+    // Speichern-Methode, wird durch den Speichern-Button ausgelöst
+    public IActionResult OnPostSaveData()
+    {
+         _logger.LogInformation("Speichern-Methode wurde aufgerufen.");  // Loggen für Debugging
+        // Dummy-Speichern-Logik (diese wird später durch eine DB ersetzt)
+        TempData["Message"] = "Daten wurden nicht erfolgreich gespeichert!";
+
+        // Weiterleitung zurück zur Index-Seite
+        return RedirectToPage();
+    }   
 }
