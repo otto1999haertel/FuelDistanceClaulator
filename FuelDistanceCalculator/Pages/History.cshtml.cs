@@ -16,4 +16,15 @@ public class HistoryModel : PageModel
     {
         ViewData["ContactName"] = ContactInfo.Name;
     }
+
+    public void OnPost(string action){
+        if (Enum.TryParse<ActionType>(action, true, out var actionType))
+        {
+            switch (actionType){
+                case ActionType.DeleteHistory:
+                Console.WriteLine("History was deleted");
+            break;
+        }
+        }
+    }
 }

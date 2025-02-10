@@ -1,5 +1,6 @@
 public enum ActionType
 {
     Calculate,
-    Save
+    Save,
+    DeleteHistory
 }

@@ -2,15 +2,21 @@
 @model HistoryModel
 
 <h3>Gespeicherte Berechnungen</h3>
-
+<div class="container">
+    <form method="post">
+         <button type="submit" class="btn btn-primary mx-2" style="width: 240px" name="action" value="@ActionType.DeleteHistory.ToString()">
+            Historie Löschen
+        </button>
+    </form>
+</div>
 <table class="table">
     <thead>
         <tr>
-            <th>Tankstelle 1</th>
-            <th>Tankstelle 2</th>
-            <th>Gesamtkosten 1</th>
-            <th>Gesamtkosten 2</th>
             <th>Datum</th>
+            <th>Tankstelle 1</th>
+            <th>Gesamtkosten TS 1</th>
+            <th>Tankstelle 2</th>
+            <th>Gesamtkosten TS 2</th>
         </tr>
     </thead>
     <tbody>
