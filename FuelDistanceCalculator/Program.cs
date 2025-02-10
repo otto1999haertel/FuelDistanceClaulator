@@ -7,6 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+// Registrieren des FuelPriceService in der DI-Container
+builder.Services.AddSingleton<FuelPriceService>(provider =>
+    new FuelPriceService(10, 2.5m));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -6,5 +6,75 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to the Fuel Distance Calculator</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Calculate the cost and compare fuel prices at two different stations.</p>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div class="row justify-content-center">
+            <!-- Eingabefelder für globale Werte - mittig zentriert -->
+            <div class="col-md-6">
+                <h3>Globale Eingabewerte</h3>
+                <div class="form-group">
+                    <label for="fuelAmount">Zu tankende Menge (Liter)</label>
+                    <input type="number" step="0.01" id="fuelAmount" name="fuelAmount" class="form-control" required asp-for="FuelAmount" />
+                </div>
+                <div class="form-group">
+                    <label for="pricePerKm">Preis pro Kilometer</label>
+                    <input type="number" step="0.01" id="pricePerKm" name="pricePerKm" class="form-control" required asp-for="PricePerKm"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Tankstelle 1 Eingabefelder - links ausgerichtet -->
+            <div class="col-md-5 offset-md-1">
+                <h3>Tankstelle 1</h3>
+                <div class="form-group">
+                    <label for="fuelPrice1">Preis an der Tankstelle 1 (€/Liter)</label>
+                    <input type="number" step="0.01" id="fuelPrice1" name="fuelPrice1" class="form-control" required asp-for="FuelPrice1"/>
+                </div>
+                <div class="form-group">
+                    <label for="distance1">Entfernung der Tankstelle 1 (km)</label>
+                    <input type="number" step="0.1" id="distance1" name="distance1" class="form-control" required asp-for="Distance1"/>
+                </div>
+            </div>
+
+            <!-- Tankstelle 2 Eingabefelder - rechts ausgerichtet -->
+            <div class="col-md-5">
+                <h3>Tankstelle 2</h3>
+                <div class="form-group">
+                    <label for="fuelPrice2">Preis an der Tankstelle 2 (€/Liter)</label>
+                    <input type="number" step="0.01" id="fuelPrice2" name="fuelPrice2" class="form-control" required asp-for="FuelPrice2"/>
+                </div>
+                <div class="form-group">
+                    <label for="distance2">Entfernung der Tankstelle 2 (km)</label>
+                    <input type="number" step="0.1" id="distance2" name="distance2" class="form-control" required asp-for="Distance2"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <!-- Container mit Flexbox, um die Buttons nebeneinander anzuordnen -->
+                <div class="d-flex justify-content-center">
+                <!-- Aktiver Berechnen-Button -->
+                <button type="submit" class="btn btn-primary mx-2" style="width: 120px">Berechnen</button>
+
+                <!-- Deaktivierter Button -->
+                <button type="button" class="btn btn-secondary mx-2" style="width: 120px" disabled>Deaktiviert</button>
+        </div>
+</div>
+
+
+    </form>
+
+    <!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
+    @if (Model.Calculated)
+    {
+        <div class="mt-4 text-center">
+            <h4>Ergebnisse:</h4>
+            <p>Tankstelle 1: Gesamtkosten: €@Model.TotalCost1</p>
+            <p>Tankstelle 2: Gesamtkosten: €@Model.TotalCost2</p>
+        </div>
+    }
 </div>
