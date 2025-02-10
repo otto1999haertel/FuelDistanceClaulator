@@ -45,4 +45,70 @@ button.accept-policy {
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+  background-color: #f8f9fa; /* Heller Hintergrund für Light Mode */
+  color: black; /* Dunkle Schrift für Light Mode */
+}
+
+body.dark-mode .footer {
+  background-color: #333; /* Dunkler Hintergrund für Dark Mode */
+  color: white !important; /* Helle Schrift für Dark Mode */
+}
+
+
+.page-title {
+  color: black; /* Standard (Light Mode) */
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Weißes Icon für Dark Mode */
+body.dark-mode .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+body.dark-mode .page-title {
+  color: white !important; /* Dark Mode */
+}
+
+/* Standard-Tabelle (Light Mode bleibt wie Bootstrap-Standard) */
+.table {
+  background-color: white;
+  color: black;
+}
+
+/* Dark Mode für Tabellen */
+body.dark-mode .table {
+  background-color: #222; /* Dunkler Hintergrund */
+  color: white !important; /* Helle Schrift */
+  border-color: #444 !important; /* Dunklere Rahmen */
+}
+
+/* Dark Mode für Tabellenüberschrift */
+body.dark-mode .table thead {
+  background-color: #333 !important; /* Noch dunkler für den Kopf */
+  color: white !important;
+}
+
+/* Dark Mode für Tabellenzellen */
+body.dark-mode .table tbody tr {
+  background-color: #282828 !important; /* Dunkler Hintergrund für Zeilen */
+  border-color: #444 !important;
+}
+
+/* Abwechselnde Zeilenfarbe für bessere Lesbarkeit */
+body.dark-mode .table tbody tr:nth-child(even) {
+  background-color: #1f1f1f !important;
+}
+
+/* Dark Mode für Zellenrahmen */
+body.dark-mode .table th,
+body.dark-mode .table td {
+  border: 1px solid #444 !important;
+}
+
+/* Dark Mode für Hover-Effekt */
+body.dark-mode .table tbody tr:hover {
+  background-color: #333 !important;
 }

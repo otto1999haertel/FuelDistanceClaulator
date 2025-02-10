@@ -29,3 +29,75 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --navbar-bg: white;
+  --navbar-text: black;
+}
+
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: white;
+  --navbar-bg: #1f1f1f;
+  --navbar-text: white;
+  --footer-text:white;
+  ---bg: #1f1f1f;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+    background-color: #333;  /* Dunkelgrauer Hintergrund */
+    color: white;  /* Weiße Schrift */
+    border: 1px solid #555;  /* Dezenter Rahmen */
+    outline: none; /* Standard-Outline entfernen */
+}
+
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+    color: #bbb;  /* Heller Grauton für Platzhalter */
+}
+
+.dark-mode input:focus,
+.dark-mode textarea:focus,
+.dark-mode select:focus {
+    background-color: white; /* Etwas helleres Grau für besseren Kontrast */
+    border: 1px solid #777; /* Leicht hellerer Rahmen */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Dezenter Glow-Effekt */
+}
+
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.navbar {
+  background-color: var(--navbar-bg) !important;
+}
+
+.navbar-nav .nav-link {
+  color: var(--navbar-text) !important;
+}
+
+.btn-outline-dark {
+  border-color: var(--navbar-text);
+  color: var(--navbar-text);
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: black; /* Standardfarbe im Light Mode */
+  text-align: center;
+}
+
+.dark-mode .page-title {
+  color: white; /* Schriftfarbe für Dark Mode */
+  background-color: black; /* Hintergrundfarbe für Dark Mode */
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
