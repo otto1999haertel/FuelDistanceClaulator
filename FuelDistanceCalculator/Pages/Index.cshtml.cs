@@ -27,6 +27,8 @@ public class IndexModel : PageModel
     public string NameGasStation2 {get;set;}
 
     public bool Calculated { get; set; }
+
+    public bool CalculationSucessful { get; set; }
     public decimal TotalCost1 { get; set; }
     public decimal TotalCost2 { get; set; }
 
@@ -54,6 +56,10 @@ public class IndexModel : PageModel
         var service1 = new FuelPriceService((int)FuelAmount, PricePerKm);
         TotalCost1 = service1.CalculateEntireCost(FuelPrice1, Distance1);
         TotalCost2 = service1.CalculateEntireCost(FuelPrice2, Distance2);
+
+        if(TotalCost1 > 0 && TotalCost2>0){
+            CalculationSucessful = true;
+        }
 
         Calculated = true;
     }

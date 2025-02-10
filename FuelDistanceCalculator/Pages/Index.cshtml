@@ -61,7 +61,11 @@
                 <button type="submit" class="btn btn-primary mx-2" style="width: 120px">Berechnen</button>
 
                 <!-- Deaktivierter Button -->
-                <button type="button" class="btn btn-secondary mx-2" style="width: 120px" disabled>Deaktiviert</button>
+                <button type="button" class="btn btn-primary mx-2" style="width: 120px" 
+                @(Model.CalculationSucessful ? "" : "disabled")>
+                Speichern
+                </button>
+
         </div>
 </div>
 
@@ -69,7 +73,7 @@
     </form>
 
     <!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
-    @if (Model.Calculated)
+    @if (Model.CalculationSucessful)
     {
         <div class="mt-4 text-center">
             <h4>Ergebnisse:</h4>
