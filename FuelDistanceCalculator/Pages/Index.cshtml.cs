@@ -93,8 +93,8 @@ public class IndexModel : PageModel
                     Console.WriteLine($"{NameGasStation1} : {TotalCost1}");
                      Console.WriteLine($"{NameGasStation2} : {TotalCost2}");
                     CalculationSucessful = true;
-                    TempData["TotalCost1"] = TotalCost1.ToString(); // Speichern in TempData
-                    TempData["TotalCost2"] = TotalCost2.ToString(); // Speichern in TempData
+                    TempData["FuelPrice1"] = TotalCost1.ToString(); // Speichern in TempData
+                    TempData["FuelPrice2"] = TotalCost2.ToString(); // Speichern in TempData
                 }
                 break;
 
@@ -104,8 +104,8 @@ public class IndexModel : PageModel
                 DateTime saveDate = DateTime.Now;
 
                 Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
-                Console.WriteLine($"{NameGasStation1} : {TempData["TotalCost1"]}");
-                Console.WriteLine($"{NameGasStation2} : {TempData["TotalCost2"]}");
+                Console.WriteLine($"{NameGasStation1} : {TempData["FuelPrice1"]}");
+                Console.WriteLine($"{NameGasStation2} : {TempData["FuelPrice2"]}");
                 Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
                 TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
                 break;

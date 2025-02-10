@@ -9,14 +9,16 @@
         </button>
     </form>
 </div>
+<br>
 <table class="table" id="fuelTable">
     <thead>
         <tr>
             <th>Datum</th>
             <th>Tankstelle 1</th>
-            <th>Gesamtkosten TS 1</th>
+            <th>Spritpreis TS 1</th>
             <th>Tankstelle 2</th>
-            <th>Gesamtkosten TS 2</th>
+            <th>Spritpreis TS 2</th>
+            <th>Spritart</th>
         </tr>
     </thead>
     <tbody>
@@ -25,9 +27,10 @@
             <tr>
                 <td>@item.Date.ToString("dd.MM.yyyy HH:mm")</td>
                 <td>@item.GasStation1</td>
-                <td>@item.TotalCost1.ToString("F2")</td>
+                <td>@item.FuelPrice1.ToString("F2")</td>
                 <td>@item.GasStation2</td>
-                <td>@item.TotalCost2.ToString("F2")</td>
+                <td>@item.FuelPrice2.ToString("F2")</td>
+                <td>@item.FuelType</td>
             </tr>
         }
     </tbody>

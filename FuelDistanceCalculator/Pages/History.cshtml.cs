@@ -21,17 +21,19 @@ public class HistoryModel : PageModel
             {
                 Date = DateTime.Now.AddDays(-1),
                 GasStation1 = "Tankstelle 1",
-                TotalCost1 = 10.50,
+                FuelPrice1 = 10.50,
                 GasStation2 = "Tankstelle 2",
-                TotalCost2 = 11.00
+                FuelPrice2 = 11.00,
+                FuelType ="Diesel"
             },
             new HistoryItem
             {
                 Date = DateTime.Now.AddDays(-2),
                 GasStation1 = "Tankstelle 3",
-                TotalCost1 = 9.75,
+                FuelPrice1 = 9.75,
                 GasStation2 = "Tankstelle 4",
-                TotalCost2 = 10.20
+                FuelPrice2 = 10.20,
+                FuelType ="Benzin"
             }
         };
     }
@@ -60,7 +62,9 @@ public class HistoryItem
 {
     public DateTime Date { get; set; }
     public string GasStation1 { get; set; }
-    public double TotalCost1 { get; set; }
+    public double FuelPrice1 { get; set; }
     public string GasStation2 { get; set; }
-    public double TotalCost2 { get; set; }
+    public double FuelPrice2 { get; set; }
+
+    public string FuelType { get; set; }
 }
