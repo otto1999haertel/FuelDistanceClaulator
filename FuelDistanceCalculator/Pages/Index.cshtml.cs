@@ -60,7 +60,7 @@ public class IndexModel : PageModel
         if(TotalCost1 > 0 && TotalCost2>0){
             CalculationSucessful = true;
         }
-
+        ViewData["ContactName"] = ContactInfo.Name;
         Calculated = true;
     }
 }
