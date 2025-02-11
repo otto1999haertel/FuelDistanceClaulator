@@ -129,6 +129,7 @@ public class IndexModel : PageModel
                 Console.WriteLine($"{NameGasStation1} : {FuelPrice1}");
                 Console.WriteLine($"{NameGasStation2} : {FuelPrice2}");
                 Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
+                Console.WriteLine($"Zu tankende Menge: {FuelAmount}");
                 TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
                 break;
 

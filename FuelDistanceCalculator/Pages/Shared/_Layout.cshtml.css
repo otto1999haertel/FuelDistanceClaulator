@@ -112,3 +112,10 @@ body.dark-mode .table td {
 body.dark-mode .table tbody tr:hover {
   background-color: #333 !important;
 }
+
+.no-click {
+  pointer-events: none; /* Klicks verhindern */
+  color: gray; /* Optisch ausgrauen */
+  text-decoration: none; /* Unterstreichung entfernen */
+  cursor: default; /* Normaler Mauszeiger */
+}

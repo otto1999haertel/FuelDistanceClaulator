@@ -22,6 +22,7 @@ public class HistoryModel : PageModel
             new HistoryItem
             {
                 Date = DateTime.Now.AddDays(-1),
+                FuelAmount=55,
                 GasStation1 = "Tankstelle 1",
                 FuelPrice1 = 10.50,
                 GasStation2 = "Tankstelle 2",
@@ -31,6 +32,7 @@ public class HistoryModel : PageModel
             new HistoryItem
             {
                 Date = DateTime.Now.AddDays(-2),
+                FuelAmount=35,
                 GasStation1 = "Tankstelle 3",
                 FuelPrice1 = 9.75,
                 GasStation2 = "Tankstelle 4",
@@ -70,4 +72,5 @@ public class HistoryItem
     public double FuelPrice2 { get; set; }
 
     public string FuelType { get; set; }
+    public double  FuelAmount{get; set; }
 }

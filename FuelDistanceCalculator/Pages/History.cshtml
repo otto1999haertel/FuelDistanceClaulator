@@ -31,11 +31,12 @@
     <thead>
         <tr>
             <th>Datum</th>
+            <th>Spritart</th>
+            <th>Tankmenge</th>
             <th>Tankstelle 1</th>
             <th>Spritpreis TS 1</th>
             <th>Tankstelle 2</th>
             <th>Spritpreis TS 2</th>
-            <th>Spritart</th>
         </tr>
     </thead>
     <tbody>
@@ -43,11 +44,12 @@
         {
             <tr>
                 <td>@item.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.FuelType</td>
+                <td>@item.FuelAmount</td>
                 <td>@item.GasStation1</td>
                 <td>@item.FuelPrice1.ToString("F2")</td>
                 <td>@item.GasStation2</td>
                 <td>@item.FuelPrice2.ToString("F2")</td>
-                <td>@item.FuelType</td>
             </tr>
         }
     </tbody>
