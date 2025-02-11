@@ -2,5 +2,8 @@ public enum ActionType
 {
     Calculate,
     Save,
-    DeleteHistory
+    DeleteHistory,
+    ExportCSV,
+
+    ImportCSV,
 }
