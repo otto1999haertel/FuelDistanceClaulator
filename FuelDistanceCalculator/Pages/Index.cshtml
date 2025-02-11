@@ -27,7 +27,7 @@
 
 
                 <div class="form-group">
-                    <label for="fuelAmount">Tankmenge (Liter)</label>
+                    <label for="fuelAmount">Tankmenge (@Model.VolumeUnit)</label>
                     <input type="text" id="FuelAmountDisplay" class="form-control" required onblur="calculateAndStore(this)" value="@Model.FuelAmount" />
                     <input type="hidden" id="FuelAmount" name="FuelAmount" value="@Model.FuelAmount" />
 
@@ -68,7 +68,7 @@
                     asp-for="NameGasStation1" onblur="updateModelValueTS1(this)"/>
                 </h3>
                 <div class="form-group">
-                    <label for="fuelPrice1">Preis an der @Model.NameGasStation1 (€/Liter)</label>
+                    <label for="fuelPrice1">Preis an der @Model.NameGasStation1 (€/@Model.VolumeUnit)</label>
                     <input type="number" step="0.01" id="FuelPrice1" name="FuelPrice1" class="form-control" required asp-for="FuelPrice1" value="@Model.FuelPrice1"/>
                 </div>
                 <div class="form-group">
@@ -85,7 +85,7 @@
                     asp-for="NameGasStation2" onblur="updateModelValueTS2(this)"/>
                 </h3>
                 <div class="form-group">
-                    <label for="fuelPrice2">Preis an der @Model.NameGasStation2 (€/Liter)</label>
+                    <label for="fuelPrice2">Preis an der @Model.NameGasStation2 (€/@Model.VolumeUnit)</label>
                     <input type="number" step="0.01" id="FuelPrice2" name="FuelPrice2" class="form-control" required asp-for="FuelPrice2" value="@Model.FuelPrice2" />
                 </div>
                 <div class="form-group">
@@ -111,12 +111,12 @@
                 var label = document.querySelector("label[for='fuelPrice1']");
                 if (label) {
                     var name = document.querySelector('input[name="NameGasStation1"]').value;
-                    label.innerHTML = 'Preis an der ' + (name || "Tankstelle 1") + ' (€/Liter)';
+                    label.innerHTML = 'Preis an der ' + (name || "Tankstelle 1") + ' (€/@Model.VolumeUnit)';
                 }
                 label = document.querySelector("label[for='distance1']");
                 if (label) {
                     var name = document.querySelector('input[name="NameGasStation1"]').value;
-                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 1") + ' (€/Liter)';
+                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 1") + ' (€/@Model.VolumeUnit)';
                 }
                 }    
 
@@ -139,12 +139,12 @@
                 var label = document.querySelector("label[for='fuelPrice2']");
                 if (label) {
                     var name = document.querySelector('input[name="NameGasStation2"]').value;
-                    label.innerHTML = 'Preis an der ' + (name || "Tankstelle 2") + ' (€/Liter)';
+                    label.innerHTML = 'Preis an der ' + (name || "Tankstelle 2") + ' (€/@Model.VolumeUnit)';
                 }
                 label = document.querySelector("label[for='distance2']");
                 if (label) {
                     var name = document.querySelector('input[name="NameGasStation2"]').value;
-                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 2") + ' (€/Liter)';
+                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 2") + ' (€/@Model.VolumeUnit)';
                 }
                 }
                 

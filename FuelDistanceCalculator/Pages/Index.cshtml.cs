@@ -50,6 +50,11 @@ public class IndexModel : PageModel
     [BindProperty]
     public bool BreakEvenAnalysisDeterministic {get;set;}
 
+    [BindProperty]
+    public VolumeUnit VolumeUnit{
+            get => SelectedFuelType == FuelType.Elektro ? VolumeUnit.kwh : VolumeUnit.Liter;
+    }
+
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
     {
         _logger = logger;
@@ -137,7 +142,7 @@ public class IndexModel : PageModel
         }
         else
          {
-        TempData["Message"] = "Ungültiger Aktionswert.";
+                TempData["Message"] = "Ungültiger Aktionswert.";
          }
 
         ViewData["ContactName"] = ContactInfo.Name;
@@ -153,5 +158,5 @@ public class IndexModel : PageModel
 
         // Weiterleitung zurück zur Index-Seite
         return RedirectToPage();
-    }   
+    }  
 }
