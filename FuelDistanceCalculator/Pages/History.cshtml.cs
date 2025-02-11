@@ -10,6 +10,8 @@ public class HistoryModel : PageModel
     // Die Liste von gespeicherten Berechnungen
     public List<HistoryItem> HistoryItems { get; set; }
 
+     public bool IsCsvExportImportEnabled { get; set; }
+
     public HistoryModel(ILogger<HistoryModel> logger)
     {
         _logger = logger;
@@ -41,6 +43,7 @@ public class HistoryModel : PageModel
     public void OnGet()
     {
         ViewData["ContactName"] = ContactInfo.Name;
+        IsCsvExportImportEnabled = false;
     }
 
     public void OnPost(string action)
