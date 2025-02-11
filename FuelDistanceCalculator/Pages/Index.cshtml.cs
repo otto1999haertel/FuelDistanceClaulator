@@ -104,8 +104,8 @@ public class IndexModel : PageModel
                 DateTime saveDate = DateTime.Now;
 
                 Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
-                Console.WriteLine($"{NameGasStation1} : {TempData["FuelPrice1"]}");
-                Console.WriteLine($"{NameGasStation2} : {TempData["FuelPrice2"]}");
+                Console.WriteLine($"{NameGasStation1} : {FuelPrice1}");
+                Console.WriteLine($"{NameGasStation2} : {FuelPrice2}");
                 Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
                 TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
                 break;
