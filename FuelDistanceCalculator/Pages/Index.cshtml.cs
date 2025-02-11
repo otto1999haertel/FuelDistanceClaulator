@@ -86,13 +86,11 @@ public class IndexModel : PageModel
     }
 
 
-     public void OnPost(string action)
+     public void OnPost(ActionType action)
     {
         Console.WriteLine($"Total cost{TotalCost1}");
         _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
-       if (Enum.TryParse<ActionType>(action, true, out var actionType))
-        {
-        switch (actionType)
+        switch (action)
         {
             case ActionType.Calculate:
                 // Berechnung durchführen
@@ -139,11 +137,6 @@ public class IndexModel : PageModel
                 TempData["Message"] = "Unbekannte Aktion.";
                 break;
         }
-        }
-        else
-         {
-                TempData["Message"] = "Ungültiger Aktionswert.";
-         }
 
         ViewData["ContactName"] = ContactInfo.Name;
 

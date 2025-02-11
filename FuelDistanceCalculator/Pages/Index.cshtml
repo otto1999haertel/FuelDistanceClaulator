@@ -156,13 +156,13 @@
         <div class="row justify-content-center mt-3">
         <div class="d-flex justify-content-center">
         <!-- Berechnen-Button -->
-        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Calculate.ToString()">
+        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Calculate">
             Berechnen
         </button>
 
         <!-- Speichern-Button -->
         <button type="submit" class="btn btn-primary mx-2" style="width: 120px" 
-                @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save.ToString()">
+                @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">
             Speichern
         </button>
     </div>
