@@ -41,6 +41,12 @@ public class IndexModel : PageModel
     [BindProperty]
     public FuelType SelectedFuelType { get; set; }
 
+    [BindProperty]
+    public double FuelAmountBreakEven { get; set; }
+
+    [BindProperty]
+    public string NameGasStationBreakEven{get;set;}
+
 
 
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
@@ -95,6 +101,12 @@ public class IndexModel : PageModel
                     CalculationSucessful = true;
                     TempData["FuelPrice1"] = TotalCost1.ToString(); // Speichern in TempData
                     TempData["FuelPrice2"] = TotalCost2.ToString(); // Speichern in TempData
+                    string [] tempBreakEvenAnalysis =  new string [2];
+                    tempBreakEvenAnalysis = _fuelPriceService.AnalyseBreakEven(FuelPrice1, Distance1, NameGasStation1, FuelPrice2,Distance2, NameGasStation2);
+                    NameGasStationBreakEven = tempBreakEvenAnalysis[0];
+                    double ergTemp=0;
+                    double.TryParse(tempBreakEvenAnalysis[1], out ergTemp);
+                    FuelAmountBreakEven = ergTemp;
                 }
                 break;
 

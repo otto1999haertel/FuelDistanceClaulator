@@ -27,7 +27,7 @@
 
 
                 <div class="form-group">
-                    <label for="fuelAmount">Zu tankende Menge (Liter)</label>
+                    <label for="fuelAmount">Tankmenge (Liter)</label>
                     <input type="text" id="FuelAmountDisplay" class="form-control" required onblur="calculateAndStore(this)" value="@Model.FuelAmount" />
                     <input type="hidden" id="FuelAmount" name="FuelAmount" value="@Model.FuelAmount" />
 
@@ -180,6 +180,7 @@
             <h4>Ergebnisse:</h4>
             <p>@Model.NameGasStation1 -  Gesamtkosten: €@Model.TotalCost1</p>
             <p>@Model.NameGasStation2 -  Gesamtkosten: €@Model.TotalCost2</p>
+            <p>Break-Even Analyse: ab einer Tankmenge von <strong>@Model.FuelAmountBreakEven.ToString("F2") </strong> l ist <strong>@Model.NameGasStationBreakEven</strong> günstiger</p>
         </div>
     }
 </div>
