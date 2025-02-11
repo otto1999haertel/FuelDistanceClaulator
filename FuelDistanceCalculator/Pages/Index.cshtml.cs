@@ -47,7 +47,8 @@ public class IndexModel : PageModel
     [BindProperty]
     public string NameGasStationBreakEven{get;set;}
 
-
+    [BindProperty]
+    public bool BreakEvenAnalysisDeterministic {get;set;}
 
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
     {
@@ -103,10 +104,16 @@ public class IndexModel : PageModel
                     TempData["FuelPrice2"] = TotalCost2.ToString(); // Speichern in TempData
                     string [] tempBreakEvenAnalysis =  new string [2];
                     tempBreakEvenAnalysis = _fuelPriceService.AnalyseBreakEven(FuelPrice1, Distance1, NameGasStation1, FuelPrice2,Distance2, NameGasStation2);
-                    NameGasStationBreakEven = tempBreakEvenAnalysis[0];
-                    double ergTemp=0;
-                    double.TryParse(tempBreakEvenAnalysis[1], out ergTemp);
-                    FuelAmountBreakEven = ergTemp;
+                    if(tempBreakEvenAnalysis.Length ==2){
+                        NameGasStationBreakEven = tempBreakEvenAnalysis[0];
+                        double ergTemp=0;
+                        double.TryParse(tempBreakEvenAnalysis[1], out ergTemp);
+                        FuelAmountBreakEven = ergTemp;
+                        BreakEvenAnalysisDeterministic =true;
+                    }
+                    else{
+                        BreakEvenAnalysisDeterministic =false; 
+                    }
                 }
                 break;
 
