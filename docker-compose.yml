@@ -3,19 +3,35 @@ version: '3.8'
 services:
   webapp:
     build:
-      context: .  # Verzeichnis für den Build
-      dockerfile: Dockerfile  # Dockerfile, das verwendet wird
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"  # Exponiere Port 8080
+      - "8080:8080"
     environment:
-      - ASPNETCORE_URLS=http://+:8080  # Umgebung setzen, damit die App auf Port 8080 lauscht
-    restart: always  # Sicherstellen, dass der Container bei einem Absturz immer neu startet
-    container_name: fuel-distance-calculator-container  # Containername für einfache Verwaltung
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=postgres;Password=example;Database=FuelDatabase
+    depends_on:
+      - db
+    command: ["./start.sh"]  # Hier wird das Skript ausgeführt
     networks:
-      - app-network  # Definiertes Netzwerk (optional, falls du mehrere Services hast)
+      - fuel-network
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: FuelDatabase
     volumes:
-      - ./data:/app/Data
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"  # Dies exponiert den Port 5432 für den Host
+    networks:
+      - fuel-network
 
 networks:
-  app-network:
-    driver: bridge  # Standard Netzwerkmodus
+  fuel-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

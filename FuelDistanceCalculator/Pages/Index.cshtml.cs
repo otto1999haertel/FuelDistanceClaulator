@@ -1,3 +1,5 @@
+using FuelDistanceCalculator.Data;
+using FuelDistanceCalculator.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,6 +8,8 @@ namespace FuelDistanceCalculator.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
+
+      private readonly AppDbContext _context;
     private FuelPriceService _fuelPriceService;
 
     [BindProperty]
@@ -55,10 +59,11 @@ public class IndexModel : PageModel
             get => SelectedFuelType == FuelType.Elektro ? VolumeUnit.kwh : VolumeUnit.Liter;
     }
 
-    public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice)
+    public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context) 
     {
         _logger = logger;
         _fuelPriceService = fuelPrice;
+          _context = context;
     }
 
     public void OnGet()
@@ -130,7 +135,23 @@ public class IndexModel : PageModel
                 Console.WriteLine($"{NameGasStation2} : {FuelPrice2}");
                 Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
                 Console.WriteLine($"Zu tankende Menge: {FuelAmount}");
-                TempData["Message"] = "Daten wurden NICHT erfolgreich gespeichert!";
+
+                var tankinfo = new TankinfoModel
+                {
+                    Date = saveDate,
+                    FuelType = SelectedFuelType.ToString(),
+                    FuelAmount = FuelAmount,
+                    NameGasStation1 = NameGasStation1,
+                    FuelPrice1 = FuelPrice1,
+                    NameGasStation2 = NameGasStation2,
+                    FuelPrice2 = FuelPrice2
+                };
+
+                // Speichern in der Datenbank
+                _context.TankinfoModel.Add(tankinfo);
+                _context.SaveChanges();
+
+                TempData["Message"] = "Daten wurden erfolgreich gespeichert!";
                 break;
 
             default:

@@ -1,20 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using FuelDistanceCalculator.Data;
+using Npgsql;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+
+
+
+// Datenbankverbindung setzen (SQLite)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registrieren des FuelPriceService in der DI-Container
 builder.Services.AddSingleton<FuelPriceService>(provider =>
     new FuelPriceService(10, 2.5));
 
-
-// Datenbankverbindung setzen (SQLite)
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Add services to the container.
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
