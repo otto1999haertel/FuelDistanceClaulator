@@ -32,16 +32,30 @@ public class HistoryModel : PageModel
         Tankinfos = await _context.TankinfoModel.ToListAsync();
     }
 
-    public void OnPost(string action)
+    public async Task OnPostAsync(string action)
     {
-        if (Enum.TryParse<ActionType>(action, true, out var actionType))
+    if (Enum.TryParse<ActionType>(action, true, out var actionType))
+    {
+        switch (actionType)
         {
-            switch (actionType)
-            {
-                case ActionType.DeleteHistory:
-                    Console.WriteLine("History was deleted");
+            case ActionType.DeleteHistory:
+                Console.WriteLine("History was deleted");
+
+                // Prüfen, ob der Kontext existiert
+                if (_context != null)
+                {
+                    var allEntries = await _context.TankinfoModel.ToListAsync();
+                    if (allEntries.Any())
+                    {
+                        _context.TankinfoModel.RemoveRange(allEntries);
+                        await _context.SaveChangesAsync();
+                    }
+                }
                 break;
-            }
         }
+    }
+
+    // Stelle sicher, dass Tankinfos aktualisiert wird, damit Razor die neue Liste kennt
+    Tankinfos = await _context.TankinfoModel.ToListAsync();
     }
 }
