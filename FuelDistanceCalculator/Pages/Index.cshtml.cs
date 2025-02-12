@@ -128,7 +128,7 @@ public class IndexModel : PageModel
             case ActionType.Save:
                 Console.WriteLine("save");
                 // Speichern durchführen
-                DateTime saveDate = DateTime.Now;
+                DateTime saveDate = DateTime.UtcNow;
 
                 Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
                 Console.WriteLine($"{NameGasStation1} : {FuelPrice1}");
