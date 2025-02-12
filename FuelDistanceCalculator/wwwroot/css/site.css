@@ -101,3 +101,22 @@ body {
   border-radius: 5px;
   text-align: center;
 }
+
+@media screen and (max-width: 767px) {
+  .col-md-5.custom-col.col-12 {
+    justify-content: space-between;
+    margin-top: 20px; 
+  }
+  .row{
+    margin-bottom: 30px; 
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .col-md-5.custom-col.col-12 {
+    justify-content: space-between;
+  }
+  .row{
+    margin-bottom: 30px; 
+  }
+}
