@@ -63,8 +63,9 @@ body {
 .dark-mode input:focus,
 .dark-mode textarea:focus,
 .dark-mode select:focus {
-    background-color: white; /* Etwas helleres Grau für besseren Kontrast */
-    border: 1px solid #777; /* Leicht hellerer Rahmen */
+    background-color: #333;
+    color: white;
+    border: 1px solid #258cfb;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Dezenter Glow-Effekt */
 }
 
