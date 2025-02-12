@@ -136,15 +136,15 @@ public class IndexModel : PageModel
                 Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
                 Console.WriteLine($"Zu tankende Menge: {FuelAmount}");
 
-                var tankinfo = new TankinfoModel
+                var tankinfo = new tankinfomodel
                 {
-                    Date = saveDate,
-                    FuelType = SelectedFuelType.ToString(),
-                    FuelAmount = FuelAmount,
-                    NameGasStation1 = NameGasStation1,
-                    FuelPrice1 = FuelPrice1,
-                    NameGasStation2 = NameGasStation2,
-                    FuelPrice2 = FuelPrice2
+                    date = saveDate,
+                    fueltype = SelectedFuelType.ToString(),
+                    fuelamount = FuelAmount,
+                    namegasstation1 = NameGasStation1,
+                    fuelprice1 = FuelPrice1,
+                    namegasstation2 = NameGasStation2,
+                    fuelprice2 = FuelPrice2
                 };
 
                 // Speichern in der Datenbank

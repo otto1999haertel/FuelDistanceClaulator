@@ -43,13 +43,13 @@
         @foreach (var item in Model.Tankinfos)
         {
             <tr>
-                <td>@item.Date.ToString("dd.MM.yyyy HH:mm")</td>
-                <td>@item.FuelType</td>
-                <td>@item.FuelAmount</td>
-                <td>@item.NameGasStation1</td>
-                <td>@item.FuelPrice1.ToString("F2")</td>
-                <td>@item.NameGasStation2</td>
-                <td>@item.FuelPrice2.ToString("F2")</td>
+                <td>@item.date.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@item.fueltype</td>
+                <td>@item.fuelamount</td>
+                <td>@item.namegasstation1</td>
+                <td>@item.fuelprice1.ToString("F2")</td>
+                <td>@item.namegasstation1</td>
+                <td>@item.fuelprice2.ToString("F2")</td>
             </tr>
         }
     </tbody>

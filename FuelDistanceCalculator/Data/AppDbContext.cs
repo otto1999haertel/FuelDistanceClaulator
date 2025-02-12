@@ -9,6 +9,15 @@ namespace FuelDistanceCalculator.Data
             : base(options) { }
 
         // Füge hier deine Tabellen als DbSet hinzu
-        public DbSet<TankinfoModel> TankinfoModel { get; set; }
+        public DbSet<tankinfomodel> TankinfoModel { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Hier kannst du den Tabellenname explizit festlegen
+            modelBuilder.Entity<tankinfomodel>()
+                .ToTable("tankinfomodel");  // Tabellenname in Kleinbuchstaben
+        }
     }
 }

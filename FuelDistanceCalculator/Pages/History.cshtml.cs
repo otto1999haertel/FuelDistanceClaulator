@@ -16,7 +16,7 @@ public class HistoryModel : PageModel
 
      private readonly AppDbContext _context;
 
-     public IList<TankinfoModel> Tankinfos { get; set; }
+     public IList<tankinfomodel> Tankinfos { get; set; }
 
     public HistoryModel(ILogger<HistoryModel> logger, AppDbContext context)
     {
