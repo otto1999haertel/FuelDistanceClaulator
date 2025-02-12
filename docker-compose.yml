@@ -13,6 +13,8 @@ services:
     container_name: fuel-distance-calculator-container  # Containername für einfache Verwaltung
     networks:
       - app-network  # Definiertes Netzwerk (optional, falls du mehrere Services hast)
+    volumes:
+      - ./data:/app/Data
 
 networks:
   app-network:

@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using FuelDistanceCalculator.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +10,11 @@ builder.Services.AddRazorPages();
 // Registrieren des FuelPriceService in der DI-Container
 builder.Services.AddSingleton<FuelPriceService>(provider =>
     new FuelPriceService(10, 2.5));
+
+
+// Datenbankverbindung setzen (SQLite)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
