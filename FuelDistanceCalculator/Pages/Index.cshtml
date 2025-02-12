@@ -158,10 +158,12 @@
         </button>
 
         <!-- Speichern-Button -->
+        @if(GlobalState.IsUserLoggedIn){
         <button type="submit" class="btn btn-primary mx-2" style="width: 120px" 
                 @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">
             Speichern
         </button>
+        }
     </div>
 
     </form>
