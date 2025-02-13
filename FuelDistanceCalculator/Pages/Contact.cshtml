@@ -9,7 +9,9 @@
 
 <div>
     <p><strong>Name:</strong> @Model.Name</p>
+    @if(GlobalState.IsNotPublic){
     <a href="mailto:@(Model.Email)">@Model.Email</a>
+    }
     <p>
         <a href="https://github.com/otto1999haertel/FuelDistanceCalculator" target="_blank">github Repository</a>
     </p>
