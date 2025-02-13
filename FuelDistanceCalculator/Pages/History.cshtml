@@ -4,26 +4,27 @@
 <h3>Gespeicherte Berechnungen</h3>
 <div class="container">
     <form method="post">
-        <!-- Button für Historie Löschen -->
-        <button type="button" class="btn btn-primary mx-2" style="width: 240px" name="action" value="@ActionType.DeleteHistory.ToString()" onclick="confirmDelete()">
-                Historie Löschen
-        </button>
+         <!-- Button für Historie Löschen -->
+    <button type="submit" class="btn btn-danger mx-2" style="width: 240px" 
+    name="action" value="@ActionType.DeleteHistory.ToString()"
+    onclick="return confirmDelete()">
+    Historie Löschen
+    </button>
 
-        
-        <!-- Button für CSV Export -->
-        <button type="submit" class="btn btn-secondary mx-2" style="width: 240px" 
+
+    <!-- Button für CSV Export -->
+    <button type="submit" class="btn btn-primary mx-2" style="width: 240px" 
         name="action" value="@ActionType.ExportCSV.ToString()"
         @(Model.IsCsvExportImportEnabled ? "" : "disabled")>
-            CSV Export
-        </button>
+        CSV Download
+    </button>
 
-        <!-- Button für CSV Import -->
-        <button type="submit" class="btn btn-secondary mx-2" style="width: 240px" 
+    <!-- Button für CSV Import -->
+    <button type="submit" class="btn btn-primary mx-2" style="width: 240px" 
         name="action" value="@ActionType.ImportCSV.ToString()"
         @(Model.IsCsvExportImportEnabled ? "" : "disabled")>
-        CSV Import
-        </button>
-
+        CSV Upload
+    </button>
     </form>
 </div>
 
@@ -57,20 +58,12 @@
 </table>
 
 <script>
-   function confirmDelete() {
-    console.log('confirmDelete called');
-    const confirmation = window.confirm("Möchten Sie wirklich den gesamten Verlauf löschen?");
-    if (confirmation) {
-        // Falls bestätigt, das Formular absenden
-        const form = document.querySelector('form');
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'action';
-        input.value = '@ActionType.DeleteHistory.ToString()'; // Achte darauf, dass der Wert hier richtig ist
-        form.appendChild(input);
-        form.submit(); // Form absenden
+    function confirmDelete() {
+        if (!confirm("Möchtest du wirklich die gesamte Historie löschen?")) {
+            return false; // Verhindert das Absenden des Formulars, wenn der Benutzer auf "Abbrechen" klickt
+        }
+        return true; // Formular wird abgesendet, wenn der Benutzer "OK" klickt
     }
-}
 
 </script>
 
