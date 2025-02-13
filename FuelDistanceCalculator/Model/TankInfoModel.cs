@@ -3,7 +3,7 @@ public class tankinfomodel
 {
     public int id { get; set; }  // Primärschlüssel (ID der Zeile)
 
-    public DateTime date { get; set; } // Datum der Erfassung
+    public string timesaved { get; set; } // Datum der Erfassung
 
     public string fueltype { get; set; } // Spritart (z.B. Benzin, Diesel)
 

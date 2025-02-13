@@ -1,6 +1,12 @@
 # Verwende das .NET SDK-Image zum Bauen der Anwendung
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
+RUN apt-get update
+RUN apt-get install -y tzdata
+
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 WORKDIR /src
 
 # Kopiere den gesamten Code ins Image

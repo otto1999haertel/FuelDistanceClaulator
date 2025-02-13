@@ -128,17 +128,20 @@ public class IndexModel : PageModel
             case ActionType.Save:
                 Console.WriteLine("save");
                 // Speichern durchführen
-                DateTime saveDate = DateTime.UtcNow;
+                //DateTime dateTime = new DateTime().Date;
+                //DateTime dbTime = dateTime;
+                DateTime germanTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Europe/Berlin"));
+                DateTime dbTime = DateTime.SpecifyKind(germanTime, DateTimeKind.Local); // Wichtig für PostgreSQL!
 
-                Console.WriteLine(saveDate.ToString("dddd, dd MMMM yyyy HH:mm"));
                 Console.WriteLine($"{NameGasStation1} : {FuelPrice1}");
                 Console.WriteLine($"{NameGasStation2} : {FuelPrice2}");
                 Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
                 Console.WriteLine($"Zu tankende Menge: {FuelAmount}");
-
+                Console.WriteLine(dbTime.ToString("HH:mm dd.MM.yyyy"));
                 var tankinfo = new tankinfomodel
                 {
-                    date = saveDate,
+                    // date = DateTime.SpecifyKind(dbTime, DateTimeKind.Unspecified),
+                    timesaved  = dbTime.ToString("HH:mm dd.MM.yyyy"),
                     fueltype = SelectedFuelType.ToString(),
                     fuelamount = FuelAmount,
                     namegasstation1 = NameGasStation1,
