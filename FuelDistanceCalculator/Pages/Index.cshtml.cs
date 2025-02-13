@@ -141,7 +141,7 @@ public class IndexModel : PageModel
                 var tankinfo = new tankinfomodel
                 {
                     // date = DateTime.SpecifyKind(dbTime, DateTimeKind.Unspecified),
-                    timesaved  = dbTime.ToString("HH:mm dd.MM.yyyy"),
+                    timesaved  = dbTime.ToString("dd.MM.yyyy HH:mm"),
                     fueltype = SelectedFuelType.ToString(),
                     fuelamount = FuelAmount,
                     namegasstation1 = NameGasStation1,

@@ -4,6 +4,5 @@ public enum ActionType
     Save,
     DeleteHistory,
     ExportCSV,
-
     ImportCSV,
 }
