@@ -103,6 +103,10 @@ body {
   text-align: center;
 }
 
+body.dark-mode .navbar-brand {
+  color: white !important;
+}
+
 @media screen and (max-width: 767px) {
   .col-md-5.custom-col.col-12 {
     justify-content: space-between;

@@ -5,8 +5,8 @@
 }
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="text-center">
-    <h1 class="display-4">Welcome to the Fuel Distance Calculator</h1>
-    <p>Calculate the cost and compare fuel prices at two different stations.</p>
+    <h1 class="display-4">Willkommen beim Fuel Distance Calculator</h1>
+    <p>Berechne und vergleiche die Gesamtkosten zwischen zwei Tankstellen</p>
 </div>
 
 <div class="container">
@@ -113,7 +113,7 @@
                 label = document.querySelector("label[for='distance1']");
                 if (label) {
                     var name = document.querySelector('input[name="NameGasStation1"]').value;
-                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 1") + ' (€/@Model.VolumeUnit)';
+                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 1") + ' (km)';
                 }
                 }    
 
@@ -141,7 +141,7 @@
                 label = document.querySelector("label[for='distance2']");
                 if (label) {
                     var name = document.querySelector('input[name="NameGasStation2"]').value;
-                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 2") + ' (€/@Model.VolumeUnit)';
+                    label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 2") + ' (km)';
                 }
                 }
                 

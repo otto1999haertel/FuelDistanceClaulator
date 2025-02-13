@@ -1,18 +1,36 @@
 @page
 @model ContactModel
 @{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Kontakt";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>If you have any questions, feel free to reach out to us!</p>
+<p>Falls du Fragen hast,kontaktiere uns gerne!</p>
 
 <div>
-    <p><strong>Name:</strong> @Model.Name</p>
-    @if(GlobalState.IsNotPublic){
-    <a href="mailto:@(Model.Email)">@Model.Email</a>
-    }
     <p>
-        <a href="https://github.com/otto1999haertel/FuelDistanceCalculator" target="_blank">github Repository</a>
+        <a href="https://github.com/otto1999haertel/FuelDistanceCalculator" target="_blank">GitHub Repository</a>
     </p>
 </div>
+
+<hr>
+
+<!-- Haftungsausschluss Abschnitt -->
+<h2>Haftungsausschluss für FuelDistanceCalculator</h2>
+
+<h3>1. Datenverarbeitung</h3>
+<p>FuelDistanceCalculator berechnet auf Basis der von Ihnen eingegebenen Informationen (z. B. Spritart, voraussichtliche Tankmenge, Preis pro Kilometer, Entfernung und Preise der Tankstellen) die voraussichtlichen Tankkosten. Diese Berechnungen erfolgen auf dem Server und werden nach Abschluss des Vorgangs gelöscht. Es werden keine persönlichen Daten oder Eingaben dauerhaft gespeichert oder weitergegeben.</p>
+
+<h3>2. Richtigkeit der Daten</h3>
+<p>Die Berechnungen basieren auf den von Ihnen eingegebenen Informationen und den aktuellen Daten, die zu dem Zeitpunkt der Berechnung zur Verfügung stehen. Wir übernehmen keine Haftung für die Richtigkeit, Vollständigkeit oder Aktualität der eingegebenen Daten, da diese von den Nutzern selbst bereitgestellt werden.</p>
+
+<h3>3. Preisinformationen</h3>
+<p>Die in FuelDistanceCalculator angezeigten Preise und Berechnungen stellen lediglich eine Schätzung dar und können von den tatsächlichen Preisen an den Tankstellen abweichen. Wir übernehmen keine Verantwortung für Preisänderungen, die nach der Berechnung auftreten, oder für die Richtigkeit der angegebenen Preise.</p>
+
+<h3>4. Haftungsausschluss</h3>
+<p>Wir übernehmen keine Haftung für etwaige Schäden oder Verluste, die durch die Nutzung von FuelDistanceCalculator oder die Verwendung der berechneten Ergebnisse entstehen. Die Nutzung der App erfolgt auf eigenes Risiko des Nutzers. FuelDistanceCalculator dient ausschließlich zur Schätzung von Spritkosten und stellt keine verbindliche Preis- oder Kostenauskunft dar.</p>
+
+<h3>5. Verfügbarkeit</h3>
+<p>Wir bemühen uns um eine ständige Verfügbarkeit der App, können jedoch keine Garantie für eine ununterbrochene oder fehlerfreie Nutzung übernehmen. Im Falle von technischen Störungen oder Ausfällen übernehmen wir keine Haftung für entgangene Daten oder sonstige durch den Ausfall entstehende Schäden.</p>
+
+<p><strong>Die Nutzung von FuelDistanceCalculator erfolgt auf eigene Verantwortung.</strong></p>

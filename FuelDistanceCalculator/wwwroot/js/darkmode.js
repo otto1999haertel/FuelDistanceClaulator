@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("darkModeToggle");
     const body = document.body;
-    const title = document.querySelector("title");
     const table = document.getElementById("fuelTable");
+    
 
     // Dark Mode Status aus dem Local Storage abrufen
     if (localStorage.getItem("darkMode") === "enabled") {
