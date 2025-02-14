@@ -156,7 +156,9 @@ public class IndexModel : PageModel
 
                 TempData["Message"] = "Daten wurden erfolgreich gespeichert!";
                 break;
-
+            case ActionType.Search:
+                Console.WriteLine("Search will be executed");
+            break;
             default:
                 // Unbekannte Aktion
                 TempData["Message"] = "Unbekannte Aktion.";
