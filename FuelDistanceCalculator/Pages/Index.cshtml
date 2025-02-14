@@ -4,6 +4,16 @@
     ViewData["Title"] = "Home page";
 }
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <!-- Hier können zusätzliche CSS- oder JS-Dateien hinzugefügt werden -->
+</head>
+<body>
+
 <div class="text-center">
     <h1 class="display-4">Willkommen beim Fuel Distance Calculator</h1>
     <p>Berechne und vergleiche die Gesamtkosten zwischen zwei Tankstellen</p>
@@ -17,7 +27,7 @@
                 <h3>Globale Eingabewerte</h3>
 
                 <!-- Dropdown für Spritart -->
-               <div class="form-group">
+                <div class="form-group">
                     <label for="FuelType">Spritart</label>
                     <select class="form-control" id="FuelType" name="SelectedFuelType" asp-for="SelectedFuelType" 
                         asp-items="@(FuelTypeHelper.FuelTypeNames.Select(kvp => new SelectListItem 
@@ -26,35 +36,16 @@
                             Text = kvp.Value 
                         }))">
                     </select>
-
                 </div>
 
-
-
-
+                <!-- Eingabe für Tankmenge -->
                 <div class="form-group">
                     <label for="fuelAmount">Tankmenge (@Model.VolumeUnit)</label>
                     <input type="text" id="FuelAmountDisplay" class="form-control" required onblur="calculateAndStore(this)" value="@Model.FuelAmount" />
                     <input type="hidden" id="FuelAmount" name="FuelAmount" value="@Model.FuelAmount" />
-
-                    <script>
-                    function calculateAndStore(input) {
-                         try {
-                         let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
-                        if (/^[0-9+\-*/().\s]*$/.test(expression)) {
-                            let result = eval(expression); // Berechne den Ausdruck
-                        if (!isNaN(result)) {
-                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
-                            document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
-                        }
-                        }
-                     } catch (e) {
-                    console.error("Ungültiger Ausdruck:", e);
-                            }
-                        }
-                    </script>
-
                 </div>
+
+                <!-- Preis pro Kilometer -->
                 <div class="form-group">
                     <label for="pricePerKm">Preis pro Kilometer</label>
                     <input type="number" step="0.01" id="PricePerKm" name="pricePerKm" class="form-control" required asp-for="PricePerKm" value="@Model.PricePerKm"/>
@@ -62,108 +53,147 @@
             </div>
         </div>
 
+        <div class="form-group d-flex justify-content-center">
+            <label>
+                <input type="radio" name="inputMethod" id="manualInput" value="manual" checked onchange="toggleInputMethod()"> Manuelle Eingabe
+            </label>
+            <label>
+                <input type="radio" name="inputMethod" id="autoInput" value="auto" onchange="toggleInputMethod()"> Automatische Auswahl
+            </label>
+        </div>
 
-        <div class="row">
-            <div class="form-group d-flex justify-content-center">
-    <label>
-        <input type="radio" name="inputMethod" id="manualInput" value="manual" checked onchange="toggleInputMethod()"> Manuelle Eingabe</input>
-    </label>
-    <label>
-        <input type="radio" name="inputMethod" id="autoInput" value="auto" onchange="toggleInputMethod()"> Automatische Auswahl</input>
-    </label>
+        <!-- Manuelle Eingabe (wird ausgeblendet, wenn Automatische Auswahl gewählt wird) -->
+        <div id="manualInputFields">
+            <div class="row">
+                <!-- Tankstelle 1 Eingabefelder - links ausgerichtet -->
+                <div class="col-md-5 offset-md-1">
+                    <h3>
+                        <input type="text" id="NameGasStation1" name="NameGasStation1" class="form-control" 
+                        placeholder="Tankstelle 1" value="@Model.NameGasStation1" 
+                        asp-for="NameGasStation1" onblur="updateModelValueTS1(this)" />
+                    </h3>
+                    <div class="form-group">
+                        <label for="fuelPrice1">Preis an der @Model.NameGasStation1 (€/@Model.VolumeUnit)</label>
+                        <input type="number" step="0.01" id="FuelPrice1" name="FuelPrice1" class="form-control" required asp-for="FuelPrice1" value="@Model.FuelPrice1"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="distance1">Entfernung der @Model.NameGasStation1 (km)</label>
+                        <input type="number" step="0.1" id="Distance1" name="Distance1" class="form-control" required asp-for="Distance1" value="@Model.Distance1" />
+                    </div>
+                </div>
+
+                <!-- Tankstelle 2 Eingabefelder - rechts ausgerichtet -->
+                <div class="col-md-5">
+                    <h3>
+                        <input type="text" id="NameGasStation2" name="NameGasStation2" class="form-control" 
+                        placeholder="Tankstelle 2" value="@Model.NameGasStation2" 
+                        asp-for="NameGasStation2" onblur="updateModelValueTS2(this)" />
+                    </h3>
+                    <div class="form-group">
+                        <label for="fuelPrice2">Preis an der @Model.NameGasStation2 (€/@Model.VolumeUnit)</label>
+                        <input type="number" step="0.01" id="FuelPrice2" name="FuelPrice2" class="form-control" required asp-for="FuelPrice2" value="@Model.FuelPrice2" />
+                    </div>
+                    <div class="form-group">
+                        <label for="distance2">Entfernung der @Model.NameGasStation2 (km)</label>
+                        <input type="number" step="0.1" id="Distance2" name="Distance2" class="form-control" required asp-for="Distance2" value="@Model.Distance2" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Automatische Auswahl (wird angezeigt, wenn Automatische Auswahl gewählt wird) -->
+        <div id="autoInputFields" style="display:none;">
+            <div class="row">
+                <div class="col-md-5 offset-md-1">
+                    <label for="generalLocation">Standort (Adresse)</label>
+                    <input type="text" id="generalLocation" class="form-control" placeholder="Geben Sie eine Adresse ein">
+                </div>
+                <div class="col-md-5">
+                    <label for="generalRadius">Radius (in km)</label>
+                    <input type="number" id="generalRadius" class="form-control" placeholder="Radius in km" min="1">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Search">Suchen</button>
+            </div>
+            <div class="row">
+                <div class="col-md-5 offset-md-1">
+                    <label for="gasStation1">Tankstelle 1</label>
+                    <select id="gasStation1" class="form-control" size="5">
+                        <!-- Beispieldaten -->
+                        <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
+                        <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
+                        <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
+                        <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
+                        <option value="Station 5">Tankstelle 5 - Entfernung 5 - Preis</option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label for="gasStation2">Tankstelle 2</label>
+                    <select id="gasStation2" class="form-control" size="5">
+                        <!-- Beispieldaten -->
+                        <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
+                        <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
+                        <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
+                        <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
+                        <option value="Station 5">Tankstelle 5 - Entfernung 5 -Preis</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Berechnen-Button -->
+        <div class="row justify-content-center mt-3">
+            <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Calculate">Berechnen</button>
+
+            <!-- Speichern-Button -->
+            @if(GlobalState.IsNotPublic){
+                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">Speichern</button>
+            }
+        </div>
+    </form>
 </div>
-
-<!-- Manuelle Eingabe (wird ausgeblendet, wenn Automatische Auswahl gewählt wird) -->
-<div id="manualInputFields">
-    <div class="row">  <!-- Hinzufügen einer row-Klasse -->
-        <!-- Tankstelle 1 Eingabefelder - links ausgerichtet -->
-        <div class="col-md-5 offset-md-1">
-            <h3>
-                <input type="text" id="NameGasStation1" name="NameGasStation1" class="form-control" 
-                placeholder="Tankstelle 1" value="@Model.NameGasStation1" 
-                asp-for="NameGasStation1" onblur="updateModelValueTS1(this)"/>
-            </h3>
-            <div class="form-group">
-                <label for="fuelPrice1">Preis an der @Model.NameGasStation1 (€/@Model.VolumeUnit)</label>
-                <input type="number" step="0.01" id="FuelPrice1" name="FuelPrice1" class="form-control" required asp-for="FuelPrice1" value="@Model.FuelPrice1"/>
-            </div>
-            <div class="form-group">
-                <label for="distance1">Entfernung der @Model.NameGasStation1 (km)</label>
-                <input type="number" step="0.1" id="Distance1" name="Distance1" class="form-control" required asp-for="Distance1" value="@Model.Distance1" />
-            </div>
+<!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
+    @if (Model.CalculationSucessful)
+    {
+        <div class="mt-4 text-center">
+            <h4>Ergebnisse:</h4>
+            <p>@Model.NameGasStation1 -  Gesamtkosten: @Model.TotalCost1.ToString("0.00") €</p>
+            <p>@Model.NameGasStation2 -  Gesamtkosten: @Model.TotalCost2.ToString("0.00") €</p>
+            @if(Model.BreakEvenAnalysisDeterministic){
+                if((int)Model.FuelAmountBreakEven>0){
+                      <p>Break-Even Analyse: ab einer Tankmenge von <strong>@Model.FuelAmountBreakEven.ToString("0.00") </strong> l ist <strong>@Model.NameGasStationBreakEven</strong> günstiger</p>
+                }
+                else{
+                    <p>Break-Even Analyse: <strong>@Model.NameGasStationBreakEven</strong> ist sofort günstoger</p>
+                }
+          
+            }
         </div>
+    }
 
-        <!-- Tankstelle 2 Eingabefelder - rechts ausgerichtet -->
-        <div class="col-md-5">
-            <h3>
-                <input type="text" id="NameGasStation2" name="NameGasStation2" class="form-control" 
-                placeholder="Tankstelle 2" value="@Model.NameGasStation2" 
-                asp-for="NameGasStation2" onblur="updateModelValueTS2(this)"/>
-            </h3>
-            <div class="form-group">
-                <label for="fuelPrice2">Preis an der @Model.NameGasStation2 (€/@Model.VolumeUnit)</label>
-                <input type="number" step="0.01" id="FuelPrice2" name="FuelPrice2" class="form-control" required asp-for="FuelPrice2" value="@Model.FuelPrice2" />
-            </div>
-            <div class="form-group">
-                <label for="distance2">Entfernung der @Model.NameGasStation2 (km)</label>
-                <input type="number" step="0.1" id="Distance2" name="Distance2" class="form-control" required asp-for="Distance2" value="@Model.Distance2" />
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Automatische Auswahl (wird angezeigt, wenn Automatische Auswahl gewählt wird) -->
-<div id="autoInputFields" style="display:none;">
-    <!-- Allgemeine Eingabefelder für Standort und Radius -->
-    <div class="row">
-        <div class="col-md-5 offset-md-1">
-            <label for="generalLocation">Standort (Adresse)</label>
-            <input type="text" id="generalLocation" class="form-control" placeholder="Geben Sie eine Adresse ein">
-        </div>
-        <div class="col-md-5">
-            <label for="generalRadius">Radius (in km)</label>
-            <input type="number" id="generalRadius" class="form-control" placeholder="Radius in km" min="1">
-        </div>
-    </div>
-      <div class="d-flex justify-content-center">
-        <form method="post">
-            <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Search">Suchen</button>
-        </form>
-    </div>
-    <div class="row">
-        <!-- Scrollbare Listen für Tankstellen -->
-        <div class="col-md-5 offset-md-1">
-            <label for="gasStation1">Tankstelle 1</label>
-            <select id="gasStation1" class="form-control" size="5">
-                <!-- Beispieldaten -->
-                <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
-                <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
-                <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
-                <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
-                <option value="Station 5">Tankstelle 5 - Entfernung 5 -Preis</option>
-            </select>
-        </div>
-        <div class="col-md-5">
-            <label for="gasStation2">Tankstelle 2</label>
-            <select id="gasStation2" class="form-control" size="5">
-                <!-- Beispieldaten -->
-                <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
-                <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
-                <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
-                <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
-                <option value="Station 5">Tankstelle 5 - Entfernung 5 - Preis</option>
-            </select>
-        </div>
-    </div>
-    
-    
-</div>
-
-
-
-            <script>
-                function updateModelValueTS1(input) {
+<!-- JavaScript für die Eingabe-Auswahl-Steuerung -->
+<script>
+    function calculateAndStore(input) {
+                            try {
+                                let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
+                                if (/^[0-9+\-*/().\s]*$/.test(expression)) {
+                                    let result = eval(expression); // Berechne den Ausdruck
+                                    if (!isNaN(result)) {
+                                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
+                                        document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
+                                    }
+                                }
+                            } catch (e) {
+                                console.error("Ungültiger Ausdruck:", e);
+                            }
+    }
+    function toggleInputMethod() {
+        const isManualInput = document.getElementById("manualInput").checked;
+        document.getElementById("manualInputFields").style.display = isManualInput ? "block" : "none";
+        document.getElementById("autoInputFields").style.display = isManualInput ? "none" : "block";
+    }
+     function updateModelValueTS1(input) {
                 // Wenn der Benutzer das Feld verlässt und nichts eingegeben hat, verwende den Platzhalter als Standard
                     if (!input.value.trim()) {
                  input.value = input.placeholder;  // Falls leer, setze den Platzhalterwert
@@ -272,80 +302,7 @@
         autoInputFields.style.display = "block";    // Zeige automatische Auswahl
     }
     }
-                
-            </script>
+</script>
 
-
-
-        </div>
-        <div class="row justify-content-center mt-3">
-        <div class="d-flex justify-content-center">
-        <!-- Berechnen-Button -->
-        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Calculate">
-            Berechnen
-        </button>
-
-        <!-- Speichern-Button -->
-        @if(GlobalState.IsNotPublic){
-        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" 
-                @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">
-            Speichern
-        </button>
-        }
-    </div>
-
-    </form>
-</div>
-
-</div>
-
-
-    <!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
-    @if (Model.CalculationSucessful)
-    {
-        <div class="mt-4 text-center">
-            <h4>Ergebnisse:</h4>
-            <p>@Model.NameGasStation1 -  Gesamtkosten: @Model.TotalCost1.ToString("0.00") €</p>
-            <p>@Model.NameGasStation2 -  Gesamtkosten: @Model.TotalCost2.ToString("0.00") €</p>
-            @if(Model.BreakEvenAnalysisDeterministic){
-                if((int)Model.FuelAmountBreakEven>0){
-                      <p>Break-Even Analyse: ab einer Tankmenge von <strong>@Model.FuelAmountBreakEven.ToString("0.00") </strong> l ist <strong>@Model.NameGasStationBreakEven</strong> günstiger</p>
-                }
-                else{
-                    <p>Break-Even Analyse: <strong>@Model.NameGasStationBreakEven</strong> ist sofort günstoger</p>
-                }
-          
-            }
-        </div>
-    }
-</div>
-
-<div id="errorToast" style="
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
-    <span id="errorMessage"></span>
-</div>
-
-@if (TempData["Message"] != null)
-{
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var toast = document.getElementById("errorToast");
-            var message = "@TempData["Message"]";
-            document.getElementById("errorMessage").innerText = message;
-            toast.style.display = "block";
-
-            // Toast nach 5 Sekunden ausblenden
-            setTimeout(function() {
-                toast.style.display = "none";
-            }, 5000);
-        });
-    </script>
-}
+</body>
+</html>

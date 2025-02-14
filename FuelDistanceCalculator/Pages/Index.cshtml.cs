@@ -94,6 +94,7 @@ public class IndexModel : PageModel
      public void OnPost(ActionType action)
     {
         Console.WriteLine($"Total cost{TotalCost1}");
+        Console.WriteLine("Action " + action);
         _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
         switch (action)
         {
