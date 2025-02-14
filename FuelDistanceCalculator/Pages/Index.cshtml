@@ -115,6 +115,17 @@
 
 <!-- Automatische Auswahl (wird angezeigt, wenn Automatische Auswahl gewählt wird) -->
 <div id="autoInputFields" style="display:none;">
+    <!-- Allgemeine Eingabefelder für Standort und Radius -->
+    <div class="row mt-3">
+        <div class="col-md-5">
+            <label for="generalLocation">Standort (Adresse)</label>
+            <input type="text" id="generalLocation" class="form-control" placeholder="Geben Sie eine Adresse ein">
+        </div>
+        <div class="col-md-5">
+            <label for="generalRadius">Radius (in km)</label>
+            <input type="number" id="generalRadius" class="form-control" placeholder="Radius in km" min="1">
+        </div>
+    </div>
     <div class="row">
         <!-- Scrollbare Listen für Tankstellen -->
         <div class="col-md-5">
@@ -140,7 +151,10 @@
             </select>
         </div>
     </div>
+    
+    
 </div>
+
 
 
             <script>
@@ -240,7 +254,18 @@
         });
     }
     function toggleInputMethod(){
-        alert("toggleInputMethod was called");
+        // Hole die beiden Eingabefelder
+    var manualInputFields = document.getElementById("manualInputFields");
+    var autoInputFields = document.getElementById("autoInputFields");
+
+    // Prüfe, welcher Radio-Button aktiv ist und stelle den entsprechenden Block ein
+         if (document.getElementById("manualInput").checked) {
+             manualInputFields.style.display = "block";  // Zeige manuelle Eingabe
+            autoInputFields.style.display = "none";    // Verberge automatische Auswahl
+    } else {
+        manualInputFields.style.display = "none";   // Verberge manuelle Eingabe
+        autoInputFields.style.display = "block";    // Zeige automatische Auswahl
+    }
     }
                 
             </script>
