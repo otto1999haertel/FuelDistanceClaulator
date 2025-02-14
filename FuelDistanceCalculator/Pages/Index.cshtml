@@ -1,4 +1,5 @@
 ﻿@page
+@using FuelDistanceCalculator.Constants
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -54,22 +55,16 @@
         </div>
 
        <div class="form-group d-flex justify-content-center">
-   <label>
-    <input type="radio" name="inputMethod" id="manualInput" value="man" 
-           onchange="toggleInputMethod(this)" @(Model.SelectInputMode.ToString() == "man" ? "checked" : "")> 
-    Manuelle Eingabe
-    </label>
-    <label>
-    <input type="radio" name="inputMethod" id="autoInput" value="auto" 
-           onchange="toggleInputMethod(this)" @(Model.SelectInputMode.ToString() == "auto" ? "checked" : "")> 
-    Automatische Auswahl
-    </label>
-    <!-- Verstecktes Feld für die Aktualisierung des Models -->
-    <input type="hidden" name="SelectInputMode" id="selectInputMode" value="@Model.SelectInputMode"/>
-
-        </div>
+        <label>
+            <input type="radio" name="SelectInputMode" id="manualInput" value="Manual" @(Model.SelectInputMode == InputMode.man ? "checked" : "") onchange="toggleInputMethod(this)"> Manuelle Eingabe
+        </label>
+        <label>
+            <input type="radio" name="SelectInputMode" id="autoInput" value="Auto" @(Model.SelectInputMode == InputMode.auto ? "checked" : "") onchange="toggleInputMethod(this)"> Automatische Auswahl
+        </label>
+    </div>
+    
         <!-- Manuelle Eingabe (wird ausgeblendet, wenn Automatische Auswahl gewählt wird) -->
-        <div id="manualInputFields">
+         <div id="manualInputFields" style="display:@(Model.SelectInputMode == InputMode.man ? "block" : "none")">
             <div class="row">
                 <!-- Tankstelle 1 Eingabefelder - links ausgerichtet -->
                 <div class="col-md-5 offset-md-1">
@@ -108,7 +103,8 @@
         </div>
 
         <!-- Automatische Auswahl (wird angezeigt, wenn Automatische Auswahl gewählt wird) -->
-        <div id="autoInputFields" style="display:none;">
+        <div id="autoInputFields" style="display:@(Model.SelectInputMode == InputMode.auto ? "block" : "none")">
+        <!-- Automatische Eingabe für Standort und Radius -->
             <div class="row">
                 <div class="col-md-5 offset-md-1">
                     <label for="generalLocation">Standort (Adresse)</label>
@@ -289,26 +285,18 @@
             list2.appendChild(option2);
         });
     }
-    function toggleInputMethod(input) {
-        console.log("ActionType toggled: " + input.value);
-    
+    function toggleInputMethod(radio) {
     var manualFields = document.getElementById("manualInputFields");
     var autoFields = document.getElementById("autoInputFields");
-    var hiddenField = document.getElementById("selectInputMode");
 
-    // Aktualisiere das versteckte Feld mit dem aktuellen Wert
-    if (hiddenField) {
-        hiddenField.value = input.value;
-    }
-
-    if (input.value === 'man') {
+    if (radio.value === "Manual") {
         manualFields.style.display = "block";
         autoFields.style.display = "none";
     } else {
         manualFields.style.display = "none";
         autoFields.style.display = "block";
     }
-    }
+}
 
 
 
