@@ -1,4 +1,7 @@
+using System.Globalization;
 using System.Text;
+using CsvHelper;
+using CsvHelper.Configuration;
 using FuelDistanceCalculator.Data;
 using FuelDistanceCalculator.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +21,9 @@ public class HistoryModel : PageModel
     private readonly AppDbContext _context;
 
     public IList<tankinfomodel> Tankinfos { get; set; }
+
+    [BindProperty]
+    public IFormFile UploadedFile { get; set; }
 
     public HistoryModel(ILogger<HistoryModel> logger, AppDbContext context)
     {
@@ -71,11 +77,11 @@ public class HistoryModel : PageModel
 
                     var tankInfos = await _context.TankinfoModel.ToListAsync(); // Daten abrufen
                     var csv = new StringBuilder();
-                    csv.AppendLine("Datum;Spritart;Tankmenge;Tankstelle 1;Spritpreis TS 1;Tankstelle 2;Spritpreis TS 2");
-
+                    csv.AppendLine("id;timesaved;fueltype;fuelamount;namegasstation1;fuelprice1;namegasstation2;fuelprice2");
+                    Console.WriteLine(csv.ToString());
                     foreach (var entry in tankInfos)
                     {
-                        csv.AppendLine($"{entry.timesaved};{entry.fueltype};{entry.fuelamount};{entry.namegasstation1};{entry.fuelprice1};{entry.namegasstation2};{entry.fuelprice2}");
+                        csv.AppendLine($"{entry.id};{entry.timesaved};{entry.fueltype};{entry.fuelamount};{entry.namegasstation1};{entry.fuelprice1};{entry.namegasstation2};{entry.fuelprice2}");
                     }
 
                     var bytes = Encoding.UTF8.GetBytes(csv.ToString());
@@ -90,4 +96,26 @@ public class HistoryModel : PageModel
         Tankinfos = await _context.TankinfoModel.ToListAsync();
         return Page();
     }
+
+    public async Task<IActionResult> OnPostImportCSVAsync()
+{
+    if (UploadedFile != null && UploadedFile.Length > 0)
+    {
+        Console.WriteLine("csv import was called");
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        {
+            Delimiter = ";"
+        };
+        using (var stream = new StreamReader(UploadedFile.OpenReadStream()))
+        using (var csv = new CsvReader(stream, config))
+        {
+            Console.WriteLine(csv.ToString());
+            var records = csv.GetRecords<tankinfomodel>().ToList();
+            _context.TankinfoModel.AddRange(records);
+            await _context.SaveChangesAsync();
+        }
+    }
+    return RedirectToPage();
+}
+
 }
