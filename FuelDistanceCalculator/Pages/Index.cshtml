@@ -188,11 +188,6 @@
                                 console.error("Ungültiger Ausdruck:", e);
                             }
     }
-    function toggleInputMethod() {
-        const isManualInput = document.getElementById("manualInput").checked;
-        document.getElementById("manualInputFields").style.display = isManualInput ? "block" : "none";
-        document.getElementById("autoInputFields").style.display = isManualInput ? "none" : "block";
-    }
      function updateModelValueTS1(input) {
                 // Wenn der Benutzer das Feld verlässt und nichts eingegeben hat, verwende den Platzhalter als Standard
                     if (!input.value.trim()) {
