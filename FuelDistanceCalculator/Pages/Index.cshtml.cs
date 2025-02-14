@@ -164,6 +164,7 @@ public class IndexModel : PageModel
                 break;
             case ActionType.Search:
                 Console.WriteLine("Search will be executed");
+                Console.WriteLine("Input mode in search case: " + SelectInputMode.ToString());
             break;
             default:
                 // Unbekannte Aktion
