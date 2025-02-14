@@ -116,8 +116,8 @@
 <!-- Automatische Auswahl (wird angezeigt, wenn Automatische Auswahl gewählt wird) -->
 <div id="autoInputFields" style="display:none;">
     <!-- Allgemeine Eingabefelder für Standort und Radius -->
-    <div class="row mt-3">
-        <div class="col-md-5">
+    <div class="row">
+        <div class="col-md-5 offset-md-1">
             <label for="generalLocation">Standort (Adresse)</label>
             <input type="text" id="generalLocation" class="form-control" placeholder="Geben Sie eine Adresse ein">
         </div>
@@ -126,28 +126,31 @@
             <input type="number" id="generalRadius" class="form-control" placeholder="Radius in km" min="1">
         </div>
     </div>
+      <div class="d-flex justify-content-center">
+    <button class="btn btn-primary mx-2" style="width: 120px" >Suchen</button>
+    </div>
     <div class="row">
         <!-- Scrollbare Listen für Tankstellen -->
-        <div class="col-md-5">
+        <div class="col-md-5 offset-md-1">
             <label for="gasStation1">Tankstelle 1</label>
             <select id="gasStation1" class="form-control" size="5">
                 <!-- Beispieldaten -->
-                <option value="Station 1">Tankstelle 1 - Adresse 1</option>
-                <option value="Station 2">Tankstelle 2 - Adresse 2</option>
-                <option value="Station 3">Tankstelle 3 - Adresse 3</option>
-                <option value="Station 4">Tankstelle 4 - Adresse 4</option>
-                <option value="Station 5">Tankstelle 5 - Adresse 5</option>
+                <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
+                <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
+                <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
+                <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
+                <option value="Station 5">Tankstelle 5 - Entfernung 5 -Preis</option>
             </select>
         </div>
         <div class="col-md-5">
             <label for="gasStation2">Tankstelle 2</label>
             <select id="gasStation2" class="form-control" size="5">
                 <!-- Beispieldaten -->
-                <option value="Station 1">Tankstelle 1 - Adresse 1</option>
-                <option value="Station 2">Tankstelle 2 - Adresse 2</option>
-                <option value="Station 3">Tankstelle 3 - Adresse 3</option>
-                <option value="Station 4">Tankstelle 4 - Adresse 4</option>
-                <option value="Station 5">Tankstelle 5 - Adresse 5</option>
+                <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
+                <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
+                <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
+                <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
+                <option value="Station 5">Tankstelle 5 - Entfernung 5 - Preis</option>
             </select>
         </div>
     </div>
