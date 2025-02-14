@@ -20,9 +20,10 @@
     </button>
     </form>
     <!-- Neues Upload-Formular für CSV-Import -->
+    </br>
     <form method="post" enctype="multipart/form-data" asp-page-handler="ImportCSV">
     <div class="input-group">
-        <input type="file" name="UploadedFile" id="fileInput" class="form-control" accept=".csv" required>
+        <input class type="file" name="UploadedFile" id="fileInput" class="form-control" accept=".csv" required>
         <button type="submit" class="btn btn-primary" id="uploadButton" disabled>
             CSV Upload
         </button>
