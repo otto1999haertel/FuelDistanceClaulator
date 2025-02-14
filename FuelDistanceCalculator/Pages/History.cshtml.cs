@@ -61,7 +61,8 @@ public class HistoryModel : PageModel
                             await _context.SaveChangesAsync();
                             Console.WriteLine("History deleted successful");
                         }
-                        else{
+                        else
+                        {
                             Console.WriteLine("no entries found");
                         }
                     }
@@ -98,24 +99,39 @@ public class HistoryModel : PageModel
     }
 
     public async Task<IActionResult> OnPostImportCSVAsync()
-{
-    if (UploadedFile != null && UploadedFile.Length > 0)
     {
-        Console.WriteLine("csv import was called");
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        if (UploadedFile != null && UploadedFile.Length > 0)
         {
-            Delimiter = ";"
-        };
-        using (var stream = new StreamReader(UploadedFile.OpenReadStream()))
-        using (var csv = new CsvReader(stream, config))
-        {
-            Console.WriteLine(csv.ToString());
-            var records = csv.GetRecords<tankinfomodel>().ToList();
-            _context.TankinfoModel.AddRange(records);
-            await _context.SaveChangesAsync();
+            Console.WriteLine("csv import was called");
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = ";"
+            };
+            using (var stream = new StreamReader(UploadedFile.OpenReadStream()))
+            //TODO Compare Hash / id
+            using (var csv = new CsvReader(stream, config))
+            {
+                Console.WriteLine(csv.ToString());
+                var records = csv.GetRecords<tankinfomodel>().ToList();
+                var tankInfos = await _context.TankinfoModel.ToListAsync(); // Daten abrufen
+                var existingIds = new HashSet<int>(tankInfos.Select(t => t.id));
+                foreach (var record in records)
+                {
+                    if (!existingIds.Contains(record.id))
+                    {
+                        Console.WriteLine("range was added");
+                        _context.TankinfoModel.Add(record);
+                        existingIds.Add(record.id); // Um auch im nächsten Durchgang den neuen Datensatz zu erkennen
+                    }
+                    else
+                    {
+                        Console.WriteLine("range was not added");
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
         }
+        return RedirectToPage();
     }
-    return RedirectToPage();
-}
 
 }
