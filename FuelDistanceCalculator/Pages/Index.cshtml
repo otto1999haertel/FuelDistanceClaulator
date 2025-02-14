@@ -53,15 +53,21 @@
             </div>
         </div>
 
-        <div class="form-group d-flex justify-content-center">
-            <label>
-                <input type="radio" name="inputMethod" id="manualInput" value="manual" checked onchange="toggleInputMethod()"> Manuelle Eingabe
-            </label>
-            <label>
-                <input type="radio" name="inputMethod" id="autoInput" value="auto" onchange="toggleInputMethod()"> Automatische Auswahl
-            </label>
-        </div>
+       <div class="form-group d-flex justify-content-center">
+   <label>
+    <input type="radio" name="inputMethod" id="manualInput" value="man" 
+           onchange="toggleInputMethod(this)" @(Model.SelectInputMode.ToString() == "man" ? "checked" : "")> 
+    Manuelle Eingabe
+    </label>
+    <label>
+    <input type="radio" name="inputMethod" id="autoInput" value="auto" 
+           onchange="toggleInputMethod(this)" @(Model.SelectInputMode.ToString() == "auto" ? "checked" : "")> 
+    Automatische Auswahl
+    </label>
+    <!-- Verstecktes Feld für die Aktualisierung des Models -->
+    <input type="hidden" name="SelectInputMode" id="selectInputMode" value="@Model.SelectInputMode"/>
 
+        </div>
         <!-- Manuelle Eingabe (wird ausgeblendet, wenn Automatische Auswahl gewählt wird) -->
         <div id="manualInputFields">
             <div class="row">
@@ -283,20 +289,29 @@
             list2.appendChild(option2);
         });
     }
-    function toggleInputMethod(){
-        // Hole die beiden Eingabefelder
-    var manualInputFields = document.getElementById("manualInputFields");
-    var autoInputFields = document.getElementById("autoInputFields");
+    function toggleInputMethod(input) {
+        console.log("ActionType toggled: " + input.value);
+    
+    var manualFields = document.getElementById("manualInputFields");
+    var autoFields = document.getElementById("autoInputFields");
+    var hiddenField = document.getElementById("selectInputMode");
 
-    // Prüfe, welcher Radio-Button aktiv ist und stelle den entsprechenden Block ein
-         if (document.getElementById("manualInput").checked) {
-             manualInputFields.style.display = "block";  // Zeige manuelle Eingabe
-            autoInputFields.style.display = "none";    // Verberge automatische Auswahl
+    // Aktualisiere das versteckte Feld mit dem aktuellen Wert
+    if (hiddenField) {
+        hiddenField.value = input.value;
+    }
+
+    if (input.value === 'man') {
+        manualFields.style.display = "block";
+        autoFields.style.display = "none";
     } else {
-        manualInputFields.style.display = "none";   // Verberge manuelle Eingabe
-        autoInputFields.style.display = "block";    // Zeige automatische Auswahl
+        manualFields.style.display = "none";
+        autoFields.style.display = "block";
     }
     }
+
+
+
 </script>
 
 </body>

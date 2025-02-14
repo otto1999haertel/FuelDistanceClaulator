@@ -1,3 +1,4 @@
+using FuelDistanceCalculator.Constants;
 using FuelDistanceCalculator.Data;
 using FuelDistanceCalculator.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,10 @@ public class IndexModel : PageModel
 
     [BindProperty]
     public bool BreakEvenAnalysisDeterministic {get;set;}
+    
+    
+    [BindProperty] 
+    public InputMode SelectInputMode {get;set;}  = InputMode.man;
 
     [BindProperty]
     public VolumeUnit VolumeUnit{
@@ -72,6 +77,7 @@ public class IndexModel : PageModel
         NameGasStation1 = "Tankstelle 1";
         NameGasStation2 = "Tankstelle 2";
         SelectedFuelType = FuelType.Diesel;
+        SelectInputMode = InputMode.man;
 
 
         Console.WriteLine("get was executed and overwirte of values");
@@ -90,8 +96,7 @@ public class IndexModel : PageModel
         }
     }
 
-
-     public void OnPost(ActionType action)
+    public void OnPost(ActionType action)
     {
         Console.WriteLine($"Total cost{TotalCost1}");
         Console.WriteLine("Action " + action);
