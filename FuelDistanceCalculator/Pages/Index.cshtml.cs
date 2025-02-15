@@ -11,7 +11,7 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
 
       private readonly AppDbContext _context;
-    private FuelPriceService _fuelPriceService;
+    private FuelCostService _fuelPriceService;
 
     [BindProperty]
     public double FuelAmount { get; set; } // Globale Tankmenge für beide Tankstellen
@@ -70,7 +70,7 @@ public class IndexModel : PageModel
     [BindProperty]
     public string Place {get; set;} 
 
-    public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context) 
+    public IndexModel(ILogger<IndexModel> logger, FuelCostService fuelPrice, AppDbContext context) 
     {
         _logger = logger;
         _fuelPriceService = fuelPrice;
@@ -108,7 +108,7 @@ public class IndexModel : PageModel
     {
         Console.WriteLine($"Total cost{TotalCost1}");
         Console.WriteLine("Action " + action);
-        _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
+        _fuelPriceService = new FuelCostService((int)FuelAmount, PricePerKm);
         switch (action)
         {
             case ActionType.Calculate:

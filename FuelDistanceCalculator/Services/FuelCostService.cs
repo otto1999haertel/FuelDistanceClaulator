@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Runtime.Intrinsics;
-public class FuelPriceService
+public class FuelCostService
 {
     private double fuelAmount;
     private double pricePerkilometer;
 
-    public FuelPriceService(double FuelAmount, double pricePerkilometer){
+    public FuelCostService(double FuelAmount, double pricePerkilometer){
         this.pricePerkilometer=pricePerkilometer;
         this.fuelAmount = FuelAmount;
     }
