@@ -93,6 +93,8 @@ public class IndexModel : PageModel
         Distance1 = 0;
         FuelPrice2 = 0;
         Distance2 = 0;
+        Radius = 1;
+        Place = "Your place";
 
         if (TempData["TotalCost1"] != null && TempData["TotalCost2"] != null)
         {
