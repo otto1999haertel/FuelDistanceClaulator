@@ -64,6 +64,12 @@ public class IndexModel : PageModel
             get => SelectedFuelType == FuelType.Elektro ? VolumeUnit.kwh : VolumeUnit.Liter;
     }
 
+    [BindProperty]
+    public int Radius {get; set;}   
+
+    [BindProperty]
+    public string Place {get; set;} 
+
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context) 
     {
         _logger = logger;
@@ -165,6 +171,13 @@ public class IndexModel : PageModel
             case ActionType.Search:
                 Console.WriteLine("Search will be executed");
                 Console.WriteLine("Input mode in search case: " + SelectInputMode.ToString());
+                //Get radius
+                Console.WriteLine("Radius " + Radius);
+                Console.WriteLine("Place " + Place);
+                //Get Long & Lat from inserted place
+                //Get all fuel stations in radius from long & lat
+                //calculate distance fuel station - plcae
+                //calculate entire costs per fuel station and sort it
             break;
             default:
                 // Unbekannte Aktion
