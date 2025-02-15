@@ -176,6 +176,8 @@ public class IndexModel : PageModel
                 //Get radius
                 Console.WriteLine("Radius " + Radius);
                 Console.WriteLine("Place " + Place);
+                Console.WriteLine("Fuelytpe  " + this.SelectedFuelType.ToString());
+                Console.WriteLine("Fuel Amount " + this.FuelAmount);
                 //Get Long & Lat from inserted place
                 //Get all fuel stations in radius from long & lat
                 //calculate distance fuel station - plcae
