@@ -100,6 +100,20 @@
                     </div>
                 </div>
             </div>
+            <!-- Berechnen-Button -->
+             <div class="row justify-content-center mt-3">
+           <button type="submit" class="btn btn-primary mx-2" 
+                style="width: 120px;
+                name="action" value="@ActionType.Calculate">
+                 Berechnen
+            </button>
+
+
+            <!-- Speichern-Button -->
+            @if(GlobalState.IsNotPublic){
+                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">Speichern</button>
+            }
+        </div>
         </div>
 
         <!-- Automatische Auswahl (wird angezeigt, wenn Automatische Auswahl gewählt wird) -->
@@ -118,8 +132,9 @@
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Search">Suchen</button>
             </div>
-            <div class="row">
-                <div class="col-md-5 offset-md-1">
+            <div class="row justify-content-center">
+            <!-- Eingabefelder für globale Werte - mittig zentriert -->
+            <div class="col-md-6">
                     <label for="gasStation1">Tankstelle 1</label>
                     <select id="gasStation1" class="form-control" size="5">
                         <!-- Beispieldaten -->
@@ -130,29 +145,10 @@
                         <option value="Station 5">Tankstelle 5 - Entfernung 5 - Preis</option>
                     </select>
                 </div>
-                <div class="col-md-5">
-                    <label for="gasStation2">Tankstelle 2</label>
-                    <select id="gasStation2" class="form-control" size="5">
-                        <!-- Beispieldaten -->
-                        <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
-                        <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
-                        <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
-                        <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
-                        <option value="Station 5">Tankstelle 5 - Entfernung 5 -Preis</option>
-                    </select>
-                </div>
             </div>
         </div>
 
-        <!-- Berechnen-Button -->
-        <div class="row justify-content-center mt-3">
-            <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Calculate">Berechnen</button>
-
-            <!-- Speichern-Button -->
-            @if(GlobalState.IsNotPublic){
-                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">Speichern</button>
-            }
-        </div>
+        
     </form>
 </div>
 <!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
