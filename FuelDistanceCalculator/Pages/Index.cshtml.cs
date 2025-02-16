@@ -178,7 +178,7 @@ public class IndexModel : PageModel
             Console.WriteLine("Fuel Amount " + FuelAmount);
 
             // API-Aufruf zur Koordinatensuche
-            var coordinates = await new GeoLocationService().GetCoordinatesAsync();
+            var coordinates = await new GeoLocationService().GetCoordinatesAsync(Place);
             if (coordinates != null)
             {
                 Console.WriteLine($"Found coordinates: " + coordinates);
