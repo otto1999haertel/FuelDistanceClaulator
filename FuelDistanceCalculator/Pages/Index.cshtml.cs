@@ -97,11 +97,25 @@ public class IndexModel : PageModel
         _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
         switch (action)
         {
-            case ActionType.Calculate:
-                // Berechnung durchführen
-                Console.WriteLine("calculate");
 
-                TotalCost1 = _fuelPriceService.CalculateEntireCost(FuelPrice1, Distance1);
+            case ActionType.Save:
+                
+
+            default:
+                // Unbekannte Aktion
+                TempData["Message"] = "Unbekannte Aktion.";
+                break;
+        }
+
+        ViewData["ContactName"] = ContactInfo.Name;
+
+    }
+
+    public void OnPostCalculateTotalCost()
+    {
+        _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
+        Console.WriteLine("calculate with seperate methode");
+        TotalCost1 = _fuelPriceService.CalculateEntireCost(FuelPrice1, Distance1);
                 TotalCost2 = _fuelPriceService.CalculateEntireCost(FuelPrice2, Distance2);
                 if (TotalCost1 > 0 && TotalCost2 > 0)
                 {
@@ -123,10 +137,10 @@ public class IndexModel : PageModel
                         BreakEvenAnalysisDeterministic =false; 
                     }
                 }
-                break;
+    }
 
-            case ActionType.Save:
-                Console.WriteLine("save");
+    public void OnPostSave(){
+        Console.WriteLine("save with seperate method");
                 // Speichern durchführen
                 //DateTime dateTime = new DateTime().Date;
                 //DateTime dbTime = dateTime;
@@ -155,16 +169,6 @@ public class IndexModel : PageModel
                 _context.SaveChanges();
 
                 TempData["Message"] = "Daten wurden erfolgreich gespeichert!";
-                break;
-
-            default:
-                // Unbekannte Aktion
-                TempData["Message"] = "Unbekannte Aktion.";
-                break;
-        }
-
-        ViewData["ContactName"] = ContactInfo.Name;
-
     }
 
     // Speichern-Methode, wird durch den Speichern-Button ausgelöst
