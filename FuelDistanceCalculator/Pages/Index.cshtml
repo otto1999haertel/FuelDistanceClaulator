@@ -28,30 +28,12 @@
                     </select>
 
                 </div>
-
-
-
-
                 <div class="form-group">
                     <label for="fuelAmount">Tankmenge (@Model.VolumeUnit)</label>
                     <input type="text" id="FuelAmountDisplay" class="form-control" required onblur="calculateAndStore(this)" value="@Model.FuelAmount" />
                     <input type="hidden" id="FuelAmount" name="FuelAmount" value="@Model.FuelAmount" />
 
                     <script>
-                    function calculateAndStore(input) {
-                         try {
-                         let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
-                        if (/^[0-9+\-*/().\s]*$/.test(expression)) {
-                            let result = eval(expression); // Berechne den Ausdruck
-                        if (!isNaN(result)) {
-                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
-                            document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
-                        }
-                        }
-                     } catch (e) {
-                    console.error("Ungültiger Ausdruck:", e);
-                            }
-                        }
                     </script>
 
                 </div>
@@ -149,6 +131,20 @@
                     var name = document.querySelector('input[name="NameGasStation2"]').value;
                     label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 2") + ' (km)';
                 }
+                }
+                function calculateAndStore(input) {
+                         try {
+                         let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
+                        if (/^[0-9+\-*/().\s]*$/.test(expression)) {
+                            let result = eval(expression); // Berechne den Ausdruck
+                        if (!isNaN(result)) {
+                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
+                            document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
+                        }
+                        }
+                     } catch (e) {
+                    console.error("Ungültiger Ausdruck:", e);
+                            }
                 }
                 
             </script>
