@@ -5,16 +5,6 @@
     ViewData["Title"] = "Home page";
 }
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <!-- Hier können zusätzliche CSS- oder JS-Dateien hinzugefügt werden -->
-</head>
-<body>
-
 <div class="text-center">
     <h1 class="display-4">Willkommen beim Fuel Distance Calculator</h1>
     <p>Berechne und vergleiche die Gesamtkosten zwischen zwei Tankstellen</p>
@@ -134,7 +124,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" name="action" value="@ActionType.Search">Suchen</button>
+                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" asp-page-handler="Search">Suchen</button>
             </div>
             <div class="row justify-content-center">
             <!-- Eingabefelder für globale Werte - mittig zentriert -->
@@ -151,44 +141,8 @@
             </div>
         </div>
 
-        
-    </form>
-</div>
-<!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
-    @if (Model.CalculationSucessful)
-    {
-        <div class="mt-4 text-center">
-            <h4>Ergebnisse:</h4>
-            <p>@Model.NameGasStation1 -  Gesamtkosten: @Model.TotalCost1.ToString("0.00") €</p>
-            <p>@Model.NameGasStation2 -  Gesamtkosten: @Model.TotalCost2.ToString("0.00") €</p>
-            @if(Model.BreakEvenAnalysisDeterministic){
-                if((int)Model.FuelAmountBreakEven>0){
-                      <p>Break-Even Analyse: ab einer Tankmenge von <strong>@Model.FuelAmountBreakEven.ToString("0.00") </strong> l ist <strong>@Model.NameGasStationBreakEven</strong> günstiger</p>
-                }
-                else{
-                    <p>Break-Even Analyse: <strong>@Model.NameGasStationBreakEven</strong> ist sofort günstoger</p>
-                }
-          
-            }
-        </div>
-    }
-
-<!-- JavaScript für die Eingabe-Auswahl-Steuerung -->
+        <!-- JavaScript für die Eingabe-Auswahl-Steuerung -->
 <script>
-    function calculateAndStore(input) {
-                            try {
-                                let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
-                                if (/^[0-9+\-*/().\s]*$/.test(expression)) {
-                                    let result = eval(expression); // Berechne den Ausdruck
-                                    if (!isNaN(result)) {
-                                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
-                                        document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
-                                    }
-                                }
-                            } catch (e) {
-                                console.error("Ungültiger Ausdruck:", e);
-                            }
-    }
      function updateModelValueTS1(input) {
                 // Wenn der Benutzer das Feld verlässt und nichts eingegeben hat, verwende den Platzhalter als Standard
                     if (!input.value.trim()) {
@@ -240,6 +194,20 @@
                     var name = document.querySelector('input[name="NameGasStation2"]').value;
                     label.innerHTML = 'Entfernung der ' + (name || "Tankstelle 2") + ' (km)';
                 }
+                }
+                function calculateAndStore(input) {
+                            try {
+                                let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
+                                if (/^[0-9+\-*/().\s]*$/.test(expression)) {
+                                    let result = eval(expression); // Berechne den Ausdruck
+                                    if (!isNaN(result)) {
+                                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
+                                        document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
+                                    }
+                                }
+                            } catch (e) {
+                                console.error("Ungültiger Ausdruck:", e);
+                            }
                 }
                 navigator.geolocation.getCurrentPosition(function(position) {
         var lat = position.coords.latitude;
@@ -296,10 +264,26 @@
         autoFields.style.display = "block";
     }
 }
-
-
-
 </script>
 
-</body>
-</html>
+        
+    </form>
+</div>
+<!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
+    @if (Model.CalculationSucessful)
+    {
+        <div class="mt-4 text-center">
+            <h4>Ergebnisse:</h4>
+            <p>@Model.NameGasStation1 -  Gesamtkosten: @Model.TotalCost1.ToString("0.00") €</p>
+            <p>@Model.NameGasStation2 -  Gesamtkosten: @Model.TotalCost2.ToString("0.00") €</p>
+            @if(Model.BreakEvenAnalysisDeterministic){
+                if((int)Model.FuelAmountBreakEven>0){
+                      <p>Break-Even Analyse: ab einer Tankmenge von <strong>@Model.FuelAmountBreakEven.ToString("0.00") </strong> l ist <strong>@Model.NameGasStationBreakEven</strong> günstiger</p>
+                }
+                else{
+                    <p>Break-Even Analyse: <strong>@Model.NameGasStationBreakEven</strong> ist sofort günstoger</p>
+                }
+          
+            }
+        </div>
+    }
