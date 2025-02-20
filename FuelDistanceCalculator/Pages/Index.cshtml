@@ -110,7 +110,7 @@
                     disabled="@(!Model.CalculationSucessful)">
                 Speichern
             </button>
-}
+            }
         </div>
         </div>
 
@@ -283,32 +283,10 @@
     }
 }
 </script>
-
-        
-
-
-        </div>
         <div class="row justify-content-center mt-3">
         <div class="d-flex justify-content-center">
-        <!-- Berechnen-Button -->
-        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" asp-page-handler="CalculateTotalCost">
-            Berechnen
-        </button>
-
-        <!-- Speichern-Button -->
-        @if(GlobalState.IsNotPublic)
-{
-        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" 
-            asp-page-handler="Save" 
-             disabled="@(!Model.CalculationSucessful)">
-        Speichern
-    </button>
-}
-
-
-
-    </div>
-
+         </div>
+         </div>
     </form>
 </div>
 <!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
