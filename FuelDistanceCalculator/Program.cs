@@ -13,8 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registrieren des FuelPriceService in der DI-Container
-builder.Services.AddSingleton<FuelCostService>(provider =>
-    new FuelCostService(10, 2.5));
+builder.Services.AddSingleton<FuelPriceService>(provider =>
+    new FuelPriceService(10, 2.5));
 
 // Add services to the container.
 builder.Services.AddRazorPages();

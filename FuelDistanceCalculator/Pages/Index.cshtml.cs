@@ -12,7 +12,7 @@ public class IndexModel : PageModel
     private readonly ILogger<IndexModel> _logger;
 
       private readonly AppDbContext _context;
-    private FuelCostService _fuelPriceService;
+    private FuelPriceService _fuelPriceService;
 
     [BindProperty]
     public double FuelAmount { get; set; } // Globale Tankmenge für beide Tankstellen
@@ -71,7 +71,7 @@ public class IndexModel : PageModel
     [BindProperty]
     public string Place {get; set;} 
 
-    public IndexModel(ILogger<IndexModel> logger, FuelCostService fuelPrice, AppDbContext context) 
+    public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context) 
     {
         _logger = logger;
         _fuelPriceService = fuelPrice;
@@ -109,69 +109,86 @@ public class IndexModel : PageModel
 {
     Console.WriteLine($"Total cost {TotalCost1}");
     Console.WriteLine("Action " + action);
-    _fuelPriceService = new FuelCostService((int)FuelAmount, PricePerKm);
+    _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
 
     switch (action)
     {
-        case ActionType.Calculate:
-            Console.WriteLine("calculate");
-
-            TotalCost1 = _fuelPriceService.CalculateEntireCost(FuelPrice1, Distance1);
-            TotalCost2 = _fuelPriceService.CalculateEntireCost(FuelPrice2, Distance2);
-
-            if (TotalCost1 > 0 && TotalCost2 > 0)
-            {
-                Console.WriteLine($"{NameGasStation1} : {TotalCost1}");
-                Console.WriteLine($"{NameGasStation2} : {TotalCost2}");
-                CalculationSucessful = true;
-                TempData["FuelPrice1"] = TotalCost1.ToString();
-                TempData["FuelPrice2"] = TotalCost2.ToString();
-
-                string[] tempBreakEvenAnalysis = await Task.Run(() => 
-                    _fuelPriceService.AnalyseBreakEven(FuelPrice1, Distance1, NameGasStation1, FuelPrice2, Distance2, NameGasStation2));
-
-                if (tempBreakEvenAnalysis.Length == 2)
-                {
-                    NameGasStationBreakEven = tempBreakEvenAnalysis[0];
-                    if (double.TryParse(tempBreakEvenAnalysis[1], out double ergTemp))
-                    {
-                        FuelAmountBreakEven = ergTemp;
-                    }
-                    BreakEvenAnalysisDeterministic = true;
-                }
-                else
-                {
-                    BreakEvenAnalysisDeterministic = false;
-                }
-            }
-            break;
 
         case ActionType.Save:
-            Console.WriteLine("save");
 
-            DateTime germanTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Europe/Berlin"));
-            DateTime dbTime = DateTime.SpecifyKind(germanTime, DateTimeKind.Local);
+       
+        
 
-            var tankinfo = new tankinfomodel
-            {
-                timesaved = dbTime.ToString("dd.MM.yyyy HH:mm"),
-                fueltype = SelectedFuelType.ToString(),
-                fuelamount = FuelAmount,
-                namegasstation1 = NameGasStation1,
-                fuelprice1 = FuelPrice1,
-                namegasstation2 = NameGasStation2,
-                fuelprice2 = FuelPrice2
-            };
-
-            _context.TankinfoModel.Add(tankinfo);
-            await _context.SaveChangesAsync(); // Asynchrone Speicherung
-
-            TempData["Message"] = "Daten wurden erfolgreich gespeichert!";
+        default:
+            TempData["Message"] = "Unbekannte Aktion.";
             break;
+    }
 
-        case ActionType.Search:
-            Console.WriteLine("Search will be executed");
-            Console.WriteLine("Input mode in search case: " + SelectInputMode.ToString());
+    ViewData["ContactName"] = ContactInfo.Name;
+    }
+
+    public void OnPostCalculateTotalCost()
+    {
+        _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
+        Console.WriteLine("calculate with seperate methode");
+        TotalCost1 = _fuelPriceService.CalculateEntireCost(FuelPrice1, Distance1);
+                TotalCost2 = _fuelPriceService.CalculateEntireCost(FuelPrice2, Distance2);
+                if (TotalCost1 > 0 && TotalCost2 > 0)
+                {
+                    Console.WriteLine($"{NameGasStation1} : {TotalCost1}");
+                     Console.WriteLine($"{NameGasStation2} : {TotalCost2}");
+                    CalculationSucessful = true;
+                    TempData["FuelPrice1"] = TotalCost1.ToString(); // Speichern in TempData
+                    TempData["FuelPrice2"] = TotalCost2.ToString(); // Speichern in TempData
+                    string [] tempBreakEvenAnalysis =  new string [2];
+                    tempBreakEvenAnalysis = _fuelPriceService.AnalyseBreakEven(FuelPrice1, Distance1, NameGasStation1, FuelPrice2,Distance2, NameGasStation2);
+                    if(tempBreakEvenAnalysis.Length ==2){
+                        NameGasStationBreakEven = tempBreakEvenAnalysis[0];
+                        double ergTemp=0;
+                        double.TryParse(tempBreakEvenAnalysis[1], out ergTemp);
+                        FuelAmountBreakEven = ergTemp;
+                        BreakEvenAnalysisDeterministic =true;
+                    }
+                    else{
+                        BreakEvenAnalysisDeterministic =false; 
+                    }
+                }
+    }
+    public void OnPostSave(){
+        Console.WriteLine("save with seperate method");
+                // Speichern durchführen
+                //DateTime dateTime = new DateTime().Date;
+                //DateTime dbTime = dateTime;
+                DateTime germanTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("Europe/Berlin"));
+                DateTime dbTime = DateTime.SpecifyKind(germanTime, DateTimeKind.Local); // Wichtig für PostgreSQL!
+
+                Console.WriteLine($"{NameGasStation1} : {FuelPrice1}");
+                Console.WriteLine($"{NameGasStation2} : {FuelPrice2}");
+                Console.WriteLine($"Ausgewählte Spritart: {SelectedFuelType}");
+                Console.WriteLine($"Zu tankende Menge: {FuelAmount}");
+                Console.WriteLine(dbTime.ToString("HH:mm dd.MM.yyyy"));
+                var tankinfo = new tankinfomodel
+                {
+                    // date = DateTime.SpecifyKind(dbTime, DateTimeKind.Unspecified),
+                    timesaved  = dbTime.ToString("dd.MM.yyyy HH:mm"),
+                    fueltype = SelectedFuelType.ToString(),
+                    fuelamount = FuelAmount,
+                    namegasstation1 = NameGasStation1,
+                    fuelprice1 = FuelPrice1,
+                    namegasstation2 = NameGasStation2,
+                    fuelprice2 = FuelPrice2
+                };
+
+                // Speichern in der Datenbank
+                _context.TankinfoModel.Add(tankinfo);
+                _context.SaveChanges();
+
+                TempData["Message"] = "Daten wurden erfolgreich gespeichert!";
+    }
+
+    public async Task OnPostSearch(){
+        Console.WriteLine("Search for optimum was executed");
+        Console.WriteLine("Input mode in search case: " + SelectInputMode.ToString());
             Console.WriteLine("Radius " + Radius);
             Console.WriteLine("Place " + Place);
             Console.WriteLine("Fuel type  " + SelectedFuelType.ToString());
@@ -184,17 +201,7 @@ public class IndexModel : PageModel
                 Console.WriteLine($"Found coordinates: " + coordinates);
                 // Weitere Verarbeitung...
             }
-            break;
-
-        default:
-            TempData["Message"] = "Unbekannte Aktion.";
-            break;
-    }
-
-    ViewData["ContactName"] = ContactInfo.Name;
-    }
-
-
+    } 
     // Speichern-Methode, wird durch den Speichern-Button ausgelöst
     public IActionResult OnPostSaveData()
     {
@@ -204,5 +211,5 @@ public class IndexModel : PageModel
 
         // Weiterleitung zurück zur Index-Seite
         return RedirectToPage();
-    }  
+    } 
 }

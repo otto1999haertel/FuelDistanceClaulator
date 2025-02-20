@@ -103,16 +103,20 @@
             <!-- Berechnen-Button -->
              <div class="row justify-content-center mt-3">
            <button type="submit" class="btn btn-primary mx-2" 
-                style="width: 120px;
-                name="action" value="@ActionType.Calculate">
+                style="width: 120px" asp-page-handler="CalculateTotalCost">
                  Berechnen
             </button>
 
 
             <!-- Speichern-Button -->
-            @if(GlobalState.IsNotPublic){
-                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" @(Model.CalculationSucessful ? "" : "disabled") name="action" value="@ActionType.Save">Speichern</button>
-            }
+            @if(GlobalState.IsNotPublic)
+            {
+                <button type="submit" class="btn btn-primary mx-2" style="width: 120px" 
+                    asp-page-handler="Save" 
+                    disabled="@(!Model.CalculationSucessful)">
+                Speichern
+            </button>
+}
         </div>
         </div>
 
