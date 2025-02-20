@@ -130,6 +130,25 @@ public class IndexModel : PageModel
     public void OnPostCalculateTotalCost()
     {
         _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
+        switch (action)
+        {
+
+            case ActionType.Save:
+                
+
+            default:
+                // Unbekannte Aktion
+                TempData["Message"] = "Unbekannte Aktion.";
+                break;
+        }
+
+        ViewData["ContactName"] = ContactInfo.Name;
+
+    }
+
+    public void OnPostCalculateTotalCost()
+    {
+        _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
         Console.WriteLine("calculate with seperate methode");
         TotalCost1 = _fuelPriceService.CalculateEntireCost(FuelPrice1, Distance1);
                 TotalCost2 = _fuelPriceService.CalculateEntireCost(FuelPrice2, Distance2);

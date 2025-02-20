@@ -34,6 +34,10 @@
                     <label for="fuelAmount">Tankmenge (@Model.VolumeUnit)</label>
                     <input type="text" id="FuelAmountDisplay" class="form-control" required onblur="calculateAndStore(this)" value="@Model.FuelAmount" />
                     <input type="hidden" id="FuelAmount" name="FuelAmount" value="@Model.FuelAmount" />
+
+                    <script>
+                    </script>
+
                 </div>
 
                 <!-- Preis pro Kilometer -->
@@ -196,6 +200,20 @@
                 }
                 }
                 function calculateAndStore(input) {
+                         try {
+                         let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
+                        if (/^[0-9+\-*/().\s]*$/.test(expression)) {
+                            let result = eval(expression); // Berechne den Ausdruck
+                        if (!isNaN(result)) {
+                        input.value = result; // Zeige das Ergebnis im Eingabefeld an
+                            document.getElementById("FuelAmount").value = result; // Speichere das Ergebnis im versteckten Feld für das Model
+                        }
+                        }
+                     } catch (e) {
+                    console.error("Ungültiger Ausdruck:", e);
+                            }
+                }
+                function calculateAndStore(input) {
                             try {
                                 let expression = input.value.replace(",", "."); // Ersetze Komma durch Punkt
                                 if (/^[0-9+\-*/().\s]*$/.test(expression)) {
@@ -267,6 +285,30 @@
 </script>
 
         
+
+
+        </div>
+        <div class="row justify-content-center mt-3">
+        <div class="d-flex justify-content-center">
+        <!-- Berechnen-Button -->
+        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" asp-page-handler="CalculateTotalCost">
+            Berechnen
+        </button>
+
+        <!-- Speichern-Button -->
+        @if(GlobalState.IsNotPublic)
+{
+        <button type="submit" class="btn btn-primary mx-2" style="width: 120px" 
+            asp-page-handler="Save" 
+             disabled="@(!Model.CalculationSucessful)">
+        Speichern
+    </button>
+}
+
+
+
+    </div>
+
     </form>
 </div>
 <!-- Berechnungen oder Ergebnisse - unter dem Berechnen Button -->
