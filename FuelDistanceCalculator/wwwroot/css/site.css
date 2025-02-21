@@ -125,6 +125,50 @@ body.dark-mode .navbar-brand {
   border-bottom: none; /* Entfernt den Strich beim letzten Element */
 }
 
+/* Standardfarben für station-summary und station-details */
+.station-summary {
+  color: black;  /* Standard (Hellmodus) */
+}
+
+.station-details {
+  color: gray;  /* Standard (Hellmodus) */
+}
+
+/* Dark Mode Anpassungen */
+body.dark-mode .station-summary {
+  color: white;  /* Weiße Schrift im Dark Mode */
+}
+
+body.dark-mode .station-details {
+  color: lightgray;  /* Helle Grauschrift im Dark Mode */
+}
+
+body.dark-mode .station-item {
+  background-color: #2c2c2c; /* Dunkler Hintergrund für Listenelemente im Dark Mode */
+  border-color: #444;  /* Dunklerer Rand */
+}
+
+body.dark-mode .station-item:nth-child(even) {
+  background-color: #3a3a3a; /* Abwechselnde Hintergrundfarbe für jedes zweite Element */
+}
+
+body.dark-mode .station-item:hover {
+  background-color: #444; /* Hellerer Hover-Effekt */
+}
+
+body.dark-mode .station-list li {
+  border-bottom: 1px solid #444;  /* Dunklerer Trennstrich zwischen den Listenelementen */
+}
+
+body.dark-mode .station-list {
+  background-color: #1f1f1f; /* Dunkler Hintergrund für die gesamte Liste */
+}
+
+body.dark-mode .station-list li:last-child {
+  border-bottom: none; /* Entfernt den Trennstrich beim letzten Listenelement */
+}
+
+
 
 @media screen and (max-width: 767px) {
   .col-md-5.custom-col.col-12 {
