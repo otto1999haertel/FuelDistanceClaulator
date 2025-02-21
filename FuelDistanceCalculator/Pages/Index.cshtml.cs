@@ -183,6 +183,18 @@ public class IndexModel : PageModel
             Console.WriteLine("Fuel type  " + SelectedFuelType.ToString().ToLower());
             Console.WriteLine("Fuel Amount " + FuelAmount);
             Console.WriteLine("Price pro kilometer " + PricePerKm);
+            string fuelTypeForAPI = "";
+            switch (SelectedFuelType){
+                case FuelType.Diesel:
+                    fuelTypeForAPI = SelectedFuelType.ToString().ToLower();
+                break;
+                case FuelType.SuperE5:
+                    fuelTypeForAPI = "e5";
+                break;
+                case FuelType.SuperE10:
+                    fuelTypeForAPI="e10";
+                break;
+            }
 
             // API-Aufruf zur Koordinatensuche
             var coordinates = await new GeoLocationService().GetCoordinatesAsync(Place);
@@ -190,7 +202,7 @@ public class IndexModel : PageModel
                 51.3478604, 
                 14.0177743, 
                 Radius, 
-                SelectedFuelType.ToString().ToLower()
+                fuelTypeForAPI
             );
             Console.WriteLine("Response in Index, Listlänge" + gasStations.Count);
             CheapestResultStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
