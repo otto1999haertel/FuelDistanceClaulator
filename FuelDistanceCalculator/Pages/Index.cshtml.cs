@@ -105,28 +105,6 @@ public class IndexModel : PageModel
         }
     }
 
-   public async Task OnPostAsync(ActionType action)
-{
-    Console.WriteLine($"Total cost {TotalCost1}");
-    Console.WriteLine("Action " + action);
-    _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
-
-    switch (action)
-    {
-
-        case ActionType.Save:
-
-       
-        
-
-        default:
-            TempData["Message"] = "Unbekannte Aktion.";
-            break;
-    }
-
-    ViewData["ContactName"] = ContactInfo.Name;
-    }
-
     public void OnPostCalculateTotalCost()
     {
         _fuelPriceService = new FuelPriceService((int)FuelAmount, PricePerKm);
