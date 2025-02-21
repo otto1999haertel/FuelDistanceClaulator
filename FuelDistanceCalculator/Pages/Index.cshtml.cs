@@ -176,16 +176,23 @@ public class IndexModel : PageModel
             Console.WriteLine("Place " + Place);
             Console.WriteLine("Fuel type  " + SelectedFuelType.ToString().ToLower());
             Console.WriteLine("Fuel Amount " + FuelAmount);
+            Console.WriteLine("Price pro kilometer " + PricePerKm);
 
             // API-Aufruf zur Koordinatensuche
             var coordinates = await new GeoLocationService().GetCoordinatesAsync(Place);
-            var gasStations = await _MarketfuelPriceService.GetGasStationsAsync(
+            List<GasStation> gasStations = await _MarketfuelPriceService.GetGasStationsAsync(
                 51.3478604, 
                 14.0177743, 
                 Radius, 
                 SelectedFuelType.ToString().ToLower()
             );
-            Console.WriteLine("Response in Index" + gasStations);
+            Console.WriteLine("Response in Index, Listlänge" + gasStations.Count);
+            List<GasStation> cheapestGasStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
+            foreach (var station in cheapestGasStations)
+            {
+                Console.WriteLine($"Station: {station.Name}, Total Cost: {station.Price * FuelAmount + station.Distance * PricePerKm} EUR");
+            }
+
             if (coordinates != null)
             {
                 Console.WriteLine($"Found coordinates: " + coordinates);

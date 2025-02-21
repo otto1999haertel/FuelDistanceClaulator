@@ -41,7 +41,7 @@ public class MarketFuelPriceService
     });
 
     // Filter the gas stations where IsOpen is true
-    var openStations = gasStationResponse?.Stations?.Where(station => station.IsOpen).ToList() ?? new List<GasStation>();
+    List<GasStation> openStations = gasStationResponse?.Stations?.Where(station => station.IsOpen).ToList() ?? new List<GasStation>();
     foreach(GasStation gS in openStations){
         Console.WriteLine("Open Gasstations in Service " + gS.ToString());
     }
