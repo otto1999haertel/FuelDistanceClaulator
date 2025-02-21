@@ -140,9 +140,10 @@
                         <li class="station-item">
                         <div class="station-summary" onclick="toggleDetails(this)">
                             <strong>@station.Name</strong> - Gesamtkosten: 
-                             @((station.CalculateTotalCost(@Model.FuelAmount, @Model.PricePerKm))) EUR
+                             @((station.CalculateTotalCost(@Model.FuelAmount, @Model.PricePerKm))) €
                             </div>
                             <div class="station-details" style="display:none;">
+                            <p>Einzelpreis pro Liter: @station.Price €</p>
                             <p>Entfernung: @station.Distance km</p>
                             <p>Ort: @station.Place, @station.Street @station.HouseNumber</p>
                         </div>
