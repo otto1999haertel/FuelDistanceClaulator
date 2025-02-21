@@ -102,8 +102,8 @@ public class IndexModel : PageModel
         Distance1 = 0;
         FuelPrice2 = 0;
         Distance2 = 0;
-        Radius = 1;
-        Place = "Bernsdorf";
+        Radius = 10;
+        Place = "02994";
 
         CheapestResultStations = new List<GasStation>();
 
