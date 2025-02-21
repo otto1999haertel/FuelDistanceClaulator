@@ -75,7 +75,7 @@ public class IndexModel : PageModel
     public string Place {get; set;} 
 
     [BindProperty]
-    public List<string> CheapestResultStations{get; set;}
+    public List<GasStation> CheapestResultStations { get; set; }
 
     public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context, MarketFuelPriceService marketFuelPriceService, GeoLocationService geoLocationService) 
     {
@@ -105,7 +105,7 @@ public class IndexModel : PageModel
         Radius = 1;
         Place = "Your place";
 
-        CheapestResultStations = new List<string>();
+        CheapestResultStations = new List<GasStation>();
 
         if (TempData["TotalCost1"] != null && TempData["TotalCost2"] != null)
         {
@@ -193,12 +193,11 @@ public class IndexModel : PageModel
                 SelectedFuelType.ToString().ToLower()
             );
             Console.WriteLine("Response in Index, Listlänge" + gasStations.Count);
-            List<GasStation> cheapestGasStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
-            foreach (var station in cheapestGasStations)
+            CheapestResultStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
+            foreach (var station in CheapestResultStations)
             {
                 string finalAnswer = $"{station.Name}, {station.Place}, {station.Street}, {station.HouseNumber} Gesamtkosten: {(station.Price * FuelAmount + station.Distance * PricePerKm):F2} EUR, Entfernung {station.Distance}";
                 Console.WriteLine(finalAnswer);
-                CheapestResultStations.Add(finalAnswer);
             }
 
             if (coordinates != null)

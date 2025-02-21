@@ -40,6 +40,12 @@ public class GasStation
     [JsonPropertyName("postCode")]
     public int PostCode { get; set; }
 
+    public decimal CalculateTotalCost(double fuelAmount, double pricePerKm)
+    {
+            return (decimal)(Price * fuelAmount + Distance * pricePerKm);
+    }
+
+
     // Überschreiben der ToString-Methode für bessere Debug-Ausgabe
     public override string ToString()
     {

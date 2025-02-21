@@ -131,23 +131,32 @@
                 <button type="submit" class="btn btn-primary mx-2" style="width: 120px" asp-page-handler="Search">Suchen</button>
             </div>
             <div class="row justify-content-center">
-            <!-- Eingabefelder für globale Werte - mittig zentriert -->
-                <div class="col-md-6">
-                @if (Model.CheapestResultStations.Any())
-                {
+            <div class="col-md-6">
+                 @if (Model.CheapestResultStations.Any())
+                 {
                     <ul class="station-list">
-                    @foreach (var stationInfo in Model.CheapestResultStations)
+                     @foreach (var station in Model.CheapestResultStations)
                     {
-                        <li>@stationInfo</li>
+                        <li class="station-item">
+                        <div class="station-summary" onclick="toggleDetails(this)">
+                            <strong>@station.Name</strong> - Gesamtkosten: 
+                             @((station.CalculateTotalCost(@Model.FuelAmount, @Model.PricePerKm))) EUR
+                            </div>
+                            <div class="station-details" style="display:none;">
+                            <p>Entfernung: @station.Distance km</p>
+                            <p>Ort: @station.Place, @station.Street @station.HouseNumber</p>
+                        </div>
+                         </li>
                     }
                     </ul>
                 }
                 else
                 {
-                    <p>Keine offenen Tankstellen im Radius gefunden.</p>
+                 <p>Keine offenen Tankstellen im Radius gefunden.</p>
                  }
-                </div>
             </div>
+            </div>
+
         </div>
 
         <!-- JavaScript für die Eingabe-Auswahl-Steuerung -->
@@ -287,6 +296,17 @@
         autoFields.style.display = "block";
     }
 }
+function toggleDetails(element) {
+        // Holen des Elements, das die Details enthält
+        var details = element.nextElementSibling;
+        
+        // Wenn die Details sichtbar sind, verstecke sie, sonst zeige sie an
+        if (details.style.display === "none" || details.style.display === "") {
+            details.style.display = "block";
+        } else {
+            details.style.display = "none";
+        }
+    }
 </script>
         <div class="row justify-content-center mt-3">
         <div class="d-flex justify-content-center">
