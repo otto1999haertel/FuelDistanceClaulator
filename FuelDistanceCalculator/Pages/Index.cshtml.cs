@@ -92,7 +92,7 @@ public class IndexModel : PageModel
         NameGasStation1 = "Tankstelle 1";
         NameGasStation2 = "Tankstelle 2";
         SelectedFuelType = FuelType.Diesel;
-        SelectInputMode = InputMode.man;
+        SelectInputMode = InputMode.auto;
 
 
         Console.WriteLine("get was executed and overwirte of values");

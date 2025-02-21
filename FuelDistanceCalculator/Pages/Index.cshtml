@@ -50,13 +50,13 @@
 
        <div class="form-group d-flex justify-content-center">
         <label>
-            <input type="radio" name="SelectInputMode" id="manualInput" value="Manual" @(Model.SelectInputMode == InputMode.man ? "checked" : "") onchange="toggleInputMethod(this)"> Manuelle Eingabe
-        </label>
-        <label>
             <input type="radio" name="SelectInputMode" id="autoInput" value="Auto" @(Model.SelectInputMode == InputMode.auto ? "checked" : "") onchange="toggleInputMethod(this)"> Optimale Suchen
         </label>
+        <label>
+            <input type="radio" name="SelectInputMode" id="manualInput" value="Manual" @(Model.SelectInputMode == InputMode.man ? "checked" : "") onchange="toggleInputMethod(this)"> Manuelle Eingabe
+        </label>
     </div>
-    
+
         <!-- Manuelle Eingabe (wird ausgeblendet, wenn Automatische Auswahl gewählt wird) -->
          <div id="manualInputFields" style="display:@(Model.SelectInputMode == InputMode.man ? "block" : "none")">
             <div class="row">
