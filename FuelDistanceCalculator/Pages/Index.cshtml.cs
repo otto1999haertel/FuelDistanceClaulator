@@ -14,6 +14,9 @@ public class IndexModel : PageModel
       private readonly AppDbContext _context;
     private FuelPriceService _fuelPriceService;
 
+    private readonly MarketFuelPriceService _MarketfuelPriceService;
+    private readonly GeoLocationService _geoLocationService;
+
     [BindProperty]
     public double FuelAmount { get; set; } // Globale Tankmenge für beide Tankstellen
     [BindProperty]
@@ -71,11 +74,13 @@ public class IndexModel : PageModel
     [BindProperty]
     public string Place {get; set;} 
 
-    public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context) 
+    public IndexModel(ILogger<IndexModel> logger, FuelPriceService fuelPrice, AppDbContext context, MarketFuelPriceService marketFuelPriceService, GeoLocationService geoLocationService) 
     {
         _logger = logger;
         _fuelPriceService = fuelPrice;
           _context = context;
+        _MarketfuelPriceService = marketFuelPriceService;
+        _geoLocationService = geoLocationService;
     }
 
     public void OnGet()
@@ -169,11 +174,18 @@ public class IndexModel : PageModel
         Console.WriteLine("Input mode in search case: " + SelectInputMode.ToString());
             Console.WriteLine("Radius " + Radius);
             Console.WriteLine("Place " + Place);
-            Console.WriteLine("Fuel type  " + SelectedFuelType.ToString());
+            Console.WriteLine("Fuel type  " + SelectedFuelType.ToString().ToLower());
             Console.WriteLine("Fuel Amount " + FuelAmount);
 
             // API-Aufruf zur Koordinatensuche
             var coordinates = await new GeoLocationService().GetCoordinatesAsync(Place);
+            var gasStations = await _MarketfuelPriceService.GetGasStationsAsync(
+                51.3478604, 
+                14.0177743, 
+                Radius, 
+                SelectedFuelType.ToString().ToLower()
+            );
+            Console.WriteLine("Response in Index" + gasStations);
             if (coordinates != null)
             {
                 Console.WriteLine($"Found coordinates: " + coordinates);

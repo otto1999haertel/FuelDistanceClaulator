@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FuelDistanceCalculator.Data;
 using Npgsql;
+using FuelDistanceCalculator.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Registrieren des FuelPriceService in der DI-Container
 builder.Services.AddSingleton<FuelPriceService>(provider =>
     new FuelPriceService(10, 2.5));
+builder.Services.AddHttpClient<MarketFuelPriceService>();
+builder.Services.AddSingleton<GeoLocationService>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
