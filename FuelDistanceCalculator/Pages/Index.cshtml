@@ -132,15 +132,20 @@
             </div>
             <div class="row justify-content-center">
             <!-- Eingabefelder für globale Werte - mittig zentriert -->
-            <div class="col-md-6">
-                    <select id="gasStation1" class="form-control" size="5">
-                        <!-- Beispieldaten -->
-                        <option value="Station 1">Tankstelle 1 - Entfernung 1 - Preis</option>
-                        <option value="Station 2">Tankstelle 2 - Entfernung 2 - Preis</option>
-                        <option value="Station 3">Tankstelle 3 - Entfernung 3 - Preis</option>
-                        <option value="Station 4">Tankstelle 4 - Entfernung 4 - Preis</option>
-                        <option value="Station 5">Tankstelle 5 - Entfernung 5 - Preis</option>
-                    </select>
+                <div class="col-md-6">
+                @if (Model.CheapestResultStations.Any())
+                {
+                    <ul class="station-list">
+                    @foreach (var stationInfo in Model.CheapestResultStations)
+                    {
+                        <li>@stationInfo</li>
+                    }
+                    </ul>
+                }
+                else
+                {
+                    <p>Keine offenen Tankstellen im Radius gefunden.</p>
+                 }
                 </div>
             </div>
         </div>

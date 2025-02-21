@@ -107,6 +107,25 @@ body.dark-mode .navbar-brand {
   color: white !important;
 }
 
+.station-list {
+  list-style-type: none; /* Entfernt die Aufzählungspunkte */
+  padding: 0; /* Entfernt unnötigen Abstand */
+}
+
+.station-list li {
+  border-bottom: 1px solid #ddd; /* Fügt einen Strich zwischen den Listenelementen hinzu */
+  padding: 10px 0; /* Fügt etwas Abstand oben und unten hinzu */
+}
+
+.station-list li:nth-child(even) {
+  background-color: #f9f9f9; /* Abwechselnde Farben für jedes zweite Element */
+}
+
+.station-list li:last-child {
+  border-bottom: none; /* Entfernt den Strich beim letzten Element */
+}
+
+
 @media screen and (max-width: 767px) {
   .col-md-5.custom-col.col-12 {
     justify-content: space-between;
