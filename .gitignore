@@ -1,4 +1,4 @@
 bin/
 obj/
 *.db
-appsettings.Development.json
+FuelDistanceCalculator/appsettings.Development.json
