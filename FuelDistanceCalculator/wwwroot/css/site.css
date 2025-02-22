@@ -21,6 +21,36 @@ body {
   margin-bottom: 60px;
 }
 
+h2 {
+  font-size: 1.75em;         /* Größer als h3 */
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ccc;  /* Deutliche Linie als Abgrenzung */
+}
+
+/* Allgemeine Formatierung für h3 */
+h3 {
+  font-size: 1.4em;          /* Etwas kleiner als h2 */
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #555;               /* Leicht abgedunkelte Schriftfarbe */
+  padding-bottom: 3px;
+  border-bottom: 1px solid #ddd;  /* Leichtere Linie zur optischen Trennung */
+}
+
+/* Anpassung im Dark Mode */
+body.dark-mode h2 {
+  border-bottom: 2px solid #555;
+}
+
+body.dark-mode h3 {
+  border-bottom: 1px solid #555;
+  color: #ccc;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
