@@ -197,11 +197,15 @@ public class IndexModel : PageModel
             }
 
             // API-Aufruf zur Koordinatensuche
-            ApiThrottle apiThrottle= new ApiThrottle();
-            var coordinates = await new GeoLocationService().GetCoordinatesAsync(Place);
-            Console.WriteLine("Koordinaten von API: " + coordinates);
-            var gasStations = await apiThrottle.ExecuteWithThrottle(fuelTypeForAPI, 
-            () => _MarketfuelPriceService.GetGasStationsAsync(coordinates.Latitude, coordinates.Longitude, Radius, fuelTypeForAPI));
+            ApiThrottle geoThrottle = new ApiThrottle();
+            ApiThrottle fuelThrottle = new ApiThrottle();
+
+            var coordinates = await geoThrottle.ExecuteWithThrottle("GeoLocation", 
+                () => new GeoLocationService().GetCoordinatesAsync(Place));
+
+            var gasStations = await fuelThrottle.ExecuteWithThrottle("FuelPrice", 
+                () => _MarketfuelPriceService.GetGasStationsAsync(coordinates.Latitude, coordinates.Longitude, Radius, fuelTypeForAPI));
+
 
             Console.WriteLine("Response in Index, Listlänge" + gasStations.Count);
             CheapestResultStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
