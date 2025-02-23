@@ -7,6 +7,7 @@ public class ApiThrottle
 
     public async Task<T> ExecuteWithThrottle<T>(string apiKey, Func<Task<T>> apiCall, TimeSpan? interval = null)
     {
+        Console.WriteLine("API-Throttle entered");
         var intervalToUse = interval ?? _defaultInterval;
         var timeSinceLastCall = DateTime.Now - _lastCallTimes.GetOrAdd(apiKey, DateTime.MinValue);
 

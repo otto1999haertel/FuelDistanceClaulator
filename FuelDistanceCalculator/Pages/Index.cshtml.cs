@@ -202,23 +202,17 @@ public class IndexModel : PageModel
 
             var coordinates = await geoThrottle.ExecuteWithThrottle("GeoLocation", 
                 () => new GeoLocationService().GetCoordinatesAsync(Place));
-
-            var gasStations = await fuelThrottle.ExecuteWithThrottle("FuelPrice", 
+            Console.WriteLine("Koordinates from API " + coordinates);
+            if(coordinates!=null){
+                var gasStations = await fuelThrottle.ExecuteWithThrottle("FuelPrice", 
                 () => _MarketfuelPriceService.GetGasStationsAsync(coordinates.Latitude, coordinates.Longitude, Radius, fuelTypeForAPI));
-
-
-            Console.WriteLine("Response in Index, Listlänge" + gasStations.Count);
-            CheapestResultStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
-            foreach (var station in CheapestResultStations)
-            {
-                string finalAnswer = $"{station.Name}, {station.Place}, {station.Street}, {station.HouseNumber} Gesamtkosten: {(station.Price * FuelAmount + station.Distance * PricePerKm):F2} EUR, Entfernung {station.Distance}";
-                Console.WriteLine(finalAnswer);
-            }
-
-            if (coordinates != null)
-            {
-                Console.WriteLine($"Found coordinates: " + coordinates);
-                // Weitere Verarbeitung...
+                Console.WriteLine("Response in Index, Listlänge" + gasStations.Count);
+                CheapestResultStations = TankCostService.GetCheapestStations(gasStations,FuelAmount,PricePerKm);
+                foreach (var station in CheapestResultStations)
+                {
+                    string finalAnswer = $"{station.Name}, {station.Place}, {station.Street}, {station.HouseNumber} Gesamtkosten: {(station.Price * FuelAmount + station.Distance * PricePerKm):F2} EUR, Entfernung {station.Distance}";
+                    Console.WriteLine(finalAnswer);
+                }
             }
     } 
     // Speichern-Methode, wird durch den Speichern-Button ausgelöst
