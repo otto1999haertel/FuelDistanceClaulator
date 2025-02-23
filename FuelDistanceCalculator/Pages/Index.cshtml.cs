@@ -97,7 +97,7 @@ public class IndexModel : PageModel
 
         Console.WriteLine("get was executed and overwirte of values");
         FuelAmount = 0;
-        PricePerKm = 0.25;
+        PricePerKm = 0.60;
         FuelPrice1 = 0;
         Distance1 = 0;
         FuelPrice2 = 0;
