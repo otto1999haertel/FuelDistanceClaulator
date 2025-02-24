@@ -6,3 +6,4 @@ FuelDistanceCalculator/appsettings.json
 # SSL Zertifikate lokal (nicht committen!)
 nginx/certs/*.crt
 nginx/certs/*.key
+.DS_Store
