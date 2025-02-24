@@ -11,7 +11,7 @@ public enum FuelType
     // LPG,
     // CNG,
     // LNG,
-     Elektro,
+    // Elektro,
     // Gas,
     // Wasserstoff,
     }   

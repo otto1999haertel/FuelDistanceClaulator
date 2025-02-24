@@ -65,7 +65,7 @@ public class IndexModel : PageModel
 
     [BindProperty]
     public VolumeUnit VolumeUnit{
-            get => SelectedFuelType == FuelType.Elektro ? VolumeUnit.kwh : VolumeUnit.Liter;
+            get => VolumeUnit.Liter;
     }
 
     [BindProperty]

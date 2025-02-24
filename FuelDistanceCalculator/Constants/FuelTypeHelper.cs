@@ -13,7 +13,7 @@ public static class FuelTypeHelper
         // { FuelType.LPG, "LPG (Autogas)" },
         // { FuelType.CNG, "CNG (Erdgas)" },
         // { FuelType.LNG, "LNG (Flüssigerdgas)" },
-         { FuelType.Elektro, "Elektro" },
+        // { FuelType.Elektro, "Elektro" },
         // { FuelType.Gas, "Gas" },
         // { FuelType.Wasserstoff, "Wasserstoff" }
     };
