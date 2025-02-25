@@ -200,8 +200,7 @@ public class IndexModel : PageModel
             ApiThrottle geoThrottle = new ApiThrottle();
             ApiThrottle fuelThrottle = new ApiThrottle();
 
-            var coordinates = await geoThrottle.ExecuteWithThrottle("GeoLocation", 
-                () => new GeoLocationService().GetCoordinatesAsync(Place));
+            var coordinates = await _geoLocationService.GetCoordinatesAsync(Place);
             Console.WriteLine("Koordinates from API " + coordinates);
             if(coordinates!=null){
                 var gasStations = await fuelThrottle.ExecuteWithThrottle("FuelPrice", 

@@ -38,5 +38,8 @@ COPY create_tables.sql /app/create_tables.sql
 # Setze die Berechtigungen für das Skript
 RUN chmod +x /app/start.sh
 
+# Setze die Umgebungsvariable für den Redis-Host
+ENV REDIS_HOST=redis:6379
+
 # ENTRYPOINT ändern, um das Start-Skript zuerst auszuführen
 ENTRYPOINT ["/bin/bash", "-c", "/app/start.sh && dotnet FuelDistanceCalculator.dll"]

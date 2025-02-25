@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  redis:
+    image: "redis:latest"
+    container_name: "redis"
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - fuel-network
+
   webapp:
     build:
       context: .
@@ -8,6 +19,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=postgres;Password=example;Database=FuelDatabase
+      - REDIS_HOST=redis:6379
     depends_on:
       - db
     command: ["./start.sh"]  # Hier wird das Skript ausgeführt
@@ -20,8 +32,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./nginx/certs:/etc/nginx/certs:ro
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./nginx/certs:/etc/nginx/certs:ro
     depends_on:
       - webapp
     networks:
@@ -46,3 +58,4 @@ networks:
 
 volumes:
   postgres-data:
+  redis_data:
