@@ -26,10 +26,10 @@ public class GasStation
     public double Longitude { get; set; }
 
     [JsonPropertyName("dist")]
-    public double Distance { get; set; }
+    public double? Distance { get; set; }
 
     [JsonPropertyName("price")]
-    public double Price { get; set; }  // Hier wird der Preis gespeichert
+    public double? Price { get; set; }  // Hier wird der Preis gespeichert
 
     [JsonPropertyName("isOpen")]
     public bool IsOpen { get; set; }

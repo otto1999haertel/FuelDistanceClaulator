@@ -8,10 +8,10 @@ public static class TankCostService{
             if (station.IsOpen)
             {
                 // Spritkosten (Preis pro Liter * Menge des getankten Sprits)
-                double fuelCost = station.Price * fuelAmount;
+                double fuelCost = (station.Price ?? 0.0) * fuelAmount;
 
                 // Wegkosten (Entfernung in km * Kosten pro Kilometer)
-                double travelCost = station.Distance * costPerKm;
+                double travelCost = (station.Distance?? 0.0) * costPerKm;
 
                 // Gesamtkosten (Spritkosten + Wegkosten)
                 double totalCost = fuelCost + travelCost;
@@ -23,6 +23,7 @@ public static class TankCostService{
 
         // Sortiere die Tankstellen nach den Gesamtkosten (aufsteigend)
         return stationCosts.OrderBy(sc => sc.TotalCost)
+                            .Take(10)
                            .Select(sc => sc.Station)
                            .ToList();
     }
